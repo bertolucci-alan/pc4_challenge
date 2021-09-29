@@ -36,3 +36,12 @@ Route::get('/editar-turma', [PagesController::class, 'editClass'])
 
 Route::get('/editar-escola', [PagesController::class, 'editSchool'])
     ->name('school.edit.render');
+
+Route::get('/registrar-aluno', [PagesController::class, 'registerStudent'])
+    ->name('student.register.render');
+
+Route::get('/registrar-turma', [PagesController::class, 'registerClass'])
+    ->name('class.register.render');
+
+Route::get('/registrar-escola', [PagesController::class, 'registerSchool'])
+    ->name('school.register.render');

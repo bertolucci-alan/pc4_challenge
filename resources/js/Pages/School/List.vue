@@ -5,7 +5,7 @@
                 <form action="">
                     <input type="text" class="input-search-students" placeholder="Digite o nome da escola...">
                     <button type="submit" class="button-search-students">Pesquisar</button>
-                    <a type="submit" class="create-link-students">Registrar nova escola</a>
+                    <Link href="/registrar-escola" class="create-link-students">Registrar nova escola</Link>
                 </form>
             </div>
             <div class="table-students-container">

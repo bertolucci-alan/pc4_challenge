@@ -5,7 +5,7 @@
                 <form action="">
                     <input type="text" class="input-search-students" placeholder="Pesquise a turma pelo ano...">
                     <button type="submit" class="button-search-students">Pesquisar</button>
-                    <a type="submit" class="create-link-students">Registrar nova turma</a>
+                    <Link href="/registrar-escola" class="create-link-students">Registrar nova turma</Link>
                 </form>
             </div>
             <div class="table-students-container">

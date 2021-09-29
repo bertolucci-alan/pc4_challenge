@@ -42,4 +42,19 @@ class PagesController extends Controller
     {
         return Inertia::render('School/Update');
     }
+
+    public function registerStudent()
+    {
+        return Inertia::render('Student/Register');
+    }
+
+    public function registerClass()
+    {
+        return Inertia::render('Class/Register');
+    }
+
+    public function registerSchool()
+    {
+        return Inertia::render('School/Register');
+    }
 }
