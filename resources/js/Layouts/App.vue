@@ -1,9 +1,9 @@
 <template>
     <div class="nav-layout">
-        <Link href="/aa" class="link-home">Página inicial</Link>
-        <Link href="/dd" class="link-home">Escolas</Link>
-        <Link href="/ww" class="link-home">Turmas</Link>
-        <Link href="/r" class="link-home">Alunos</Link>
+        <Link href="/" class="link-home">Página inicial</Link>
+        <Link href="/alunos" class="link-home">Alunos</Link>
+        <Link href="/turmas" class="link-home">Turmas</Link>
+        <Link href="/escolas" class="link-home">Escolas</Link>
     </div>
     <slot/>
 </template>

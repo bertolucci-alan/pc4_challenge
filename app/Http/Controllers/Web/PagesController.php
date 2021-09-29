@@ -27,4 +27,19 @@ class PagesController extends Controller
     {
         return Inertia::render('School/List');
     }
+
+    public function editStudent()
+    {
+        return Inertia::render('Student/Update');
+    }
+
+    public function editClass()
+    {
+        return Inertia::render('Class/Update');
+    }
+
+    public function editSchool()
+    {
+        return Inertia::render('School/Update');
+    }
 }

@@ -9,14 +9,14 @@
                     <p class="title-home">Alunos</p>
                 </Link>
 
-                <Link href="/alunos" class="options-home">
+                <Link href="/turmas" class="options-home">
                     <div class="img-container-home">
                         <img src="assets/class.jpg" alt="" class="img-home">
                     </div>
                     <p class="title-home">Turmas</p>
                 </Link>
 
-                <Link href="/alunos" class="options-home">
+                <Link href="/escolas" class="options-home">
                     <div class="img-container-home">
                         <img src="assets/school.jpg" alt="" class="img-home">
                     </div>

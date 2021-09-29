@@ -27,3 +27,12 @@ Route::get('/turmas', [PagesController::class, 'classes'])
 
 Route::get('/escolas', [PagesController::class, 'schools'])
     ->name('schools');
+
+Route::get('/editar-aluno', [PagesController::class, 'editStudent'])
+    ->name('student.edit.render');
+
+Route::get('/editar-turma', [PagesController::class, 'editClass'])
+    ->name('class.edit.render');
+
+Route::get('/editar-escola', [PagesController::class, 'editSchool'])
+    ->name('school.edit.render');

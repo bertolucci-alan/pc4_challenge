@@ -5,7 +5,7 @@
                 <form action="">
                     <input type="text" class="input-search-students" placeholder="Digite o nome do aluno...">
                     <button type="submit" class="button-search-students">Pesquisar</button>
-                    <a type="submit" class="create-link-students">Registrar novo Aluno</a>
+                    <a type="submit" class="create-link-students">Registrar novo aluno</a>
                 </form>
             </div>
             <div class="table-students-container">
@@ -32,7 +32,7 @@
                             <td>
                                 <form action="">
                                     <button class="button-remove-student">Excluir</button>
-                                    <a>Editar</a>
+                                    <Link href="/editar-aluno">Editar</Link>
                                 </form>
                             </td>
                         </tr>
@@ -46,7 +46,7 @@
                             <td>
                                 <form action="">
                                     <button class="button-remove-student">Excluir</button>
-                                    <a>Editar</a>
+                                    <Link href="/editar-aluno">Editar</Link>
                                 </form>
                             </td>
                         </tr>
@@ -59,8 +59,14 @@
 
 <script>
 import Layout from '../../Layouts/App.vue';
+import { Link } from '@inertiajs/inertia-vue3';
+
 export default {
     layout: Layout,
+
+    components: {
+        Link,
+    }
 
 };
 </script>
