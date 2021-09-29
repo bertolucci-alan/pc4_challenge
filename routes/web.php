@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\PagesController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -15,15 +16,32 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+Route::get('/', [PagesController::class, 'home'])
+    ->name('home');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
+Route::get('/alunos', [PagesController::class, 'students'])
+    ->name('students');
+
+Route::get('/turmas', [PagesController::class, 'classes'])
+    ->name('classes');
+
+Route::get('/escolas', [PagesController::class, 'schools'])
+    ->name('schools');
+
+Route::get('/editar-aluno', [PagesController::class, 'editStudent'])
+    ->name('student.edit.render');
+
+Route::get('/editar-turma', [PagesController::class, 'editClass'])
+    ->name('class.edit.render');
+
+Route::get('/editar-escola', [PagesController::class, 'editSchool'])
+    ->name('school.edit.render');
+
+Route::get('/registrar-aluno', [PagesController::class, 'registerStudent'])
+    ->name('student.register.render');
+
+Route::get('/registrar-turma', [PagesController::class, 'registerClass'])
+    ->name('class.register.render');
+
+Route::get('/registrar-escola', [PagesController::class, 'registerSchool'])
+    ->name('school.register.render');
