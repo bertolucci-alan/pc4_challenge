@@ -16,37 +16,27 @@
                             <th>Nome completo</th>
                             <th>E-mail</th>
                             <th>Nascimento</th>
-                            <th>Turma</th>
+                            <th>Telefone</th>
+                            <th>Turmas</th>
                             <th>Escola</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Alan dos Snatos Berotlucci</td>
-                            <td>beterrababir23@gmail,com</td>
-                            <td>22/11/1111</td>
-                            <td>Desencolvimento</td>
-                            <td>Etec mansenhor antoniao magliano</td>
+                        <tr v-for="student in students" :key="student.id">
+                            <td>{{ student.id }}</td>
+                            <td>{{ student.name }}</td>
+                            <td>{{ student.email }}</td>
+                            <td>{{ student.birth }}</td>
+                            <td>{{ student.phone }}</td>
+                            <td>{{ student.id }}</td>
+                            <td>{{ student.id }}</td>
                             <td>
                                 <form action="">
-                                    <button class="button-remove-student">Excluir</button>
-                                    <Link href="/editar-aluno">Editar</Link>
-                                </form>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Alan dos Snatos Berotlucci</td>
-                            <td>beterrababir23@gmail,com</td>
-                            <td>22/11/1111</td>
-                            <td>Desencolvimento</td>
-                            <td>Etec mansenhor antoniao magliano</td>
-                            <td>
-                                <form action="">
-                                    <button class="button-remove-student">Excluir</button>
-                                    <Link href="/editar-aluno">Editar</Link>
+                                    <div  class="form-action-students">
+                                        <button class="button-remove-student">Excluir</button>
+                                        <Link href="/editar-aluno" class="link-edit-student">Editar</Link>
+                                    </div>
                                 </form>
                             </td>
                         </tr>
@@ -62,10 +52,23 @@ import Layout from '../../Layouts/App.vue';
 import { Link } from '@inertiajs/inertia-vue3';
 
 export default {
-    layout: Layout,
+
+    data() {
+        return {
+            students: {}
+        }
+    },
+
+    mounted() {
+        axios.get('api/students').then((response) => {
+            this.students = response.data.students;
+            console.log(response);
+        })
+    },
 
     components: {
         Link,
+        Layout,
     }
 
 };

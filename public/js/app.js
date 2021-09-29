@@ -19355,9 +19355,22 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  layout: _Layouts_App_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+  data: function data() {
+    return {
+      students: {}
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('api/students').then(function (response) {
+      _this.students = response.data.students;
+      console.log(response);
+    });
+  },
   components: {
-    Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.Link
+    Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.Link,
+    Layout: _Layouts_App_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
 });
 
@@ -20494,81 +20507,24 @@ var _hoisted_8 = {
   "class": "table-students"
 };
 
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "ID"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Nome completo"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "E-mail"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Nascimento"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Turma"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Escola"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Ações")])], -1
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "ID"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Nome completo"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "E-mail"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Nascimento"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Telefone"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Turmas"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Escola"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Ações")])], -1
 /* HOISTED */
 );
 
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "1", -1
-/* HOISTED */
-);
-
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "Alan dos Snatos Berotlucci", -1
-/* HOISTED */
-);
-
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "beterrababir23@gmail,com", -1
-/* HOISTED */
-);
-
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "22/11/1111", -1
-/* HOISTED */
-);
-
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "Desencolvimento", -1
-/* HOISTED */
-);
-
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "Etec mansenhor antoniao magliano", -1
-/* HOISTED */
-);
-
-var _hoisted_16 = {
+var _hoisted_10 = {
   action: ""
 };
+var _hoisted_11 = {
+  "class": "form-action-students"
+};
 
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   "class": "button-remove-student"
 }, "Excluir", -1
 /* HOISTED */
 );
 
-var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Editar");
-
-var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "1", -1
-/* HOISTED */
-);
-
-var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "Alan dos Snatos Berotlucci", -1
-/* HOISTED */
-);
-
-var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "beterrababir23@gmail,com", -1
-/* HOISTED */
-);
-
-var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "22/11/1111", -1
-/* HOISTED */
-);
-
-var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "Desencolvimento", -1
-/* HOISTED */
-);
-
-var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "Etec mansenhor antoniao magliano", -1
-/* HOISTED */
-);
-
-var _hoisted_25 = {
-  action: ""
-};
-
-var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-  "class": "button-remove-student"
-}, "Excluir", -1
-/* HOISTED */
-);
-
-var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Editar");
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Editar");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Link");
@@ -20587,25 +20543,37 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         _: 1
         /* STABLE */
 
-      })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_10, _hoisted_11, _hoisted_12, _hoisted_13, _hoisted_14, _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
-        href: "/editar-aluno"
-      }, {
-        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_18];
-        }),
-        _: 1
-        /* STABLE */
+      })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.students, function (student) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
+          key: student.id
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(student.id), 1
+        /* TEXT */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(student.name), 1
+        /* TEXT */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(student.email), 1
+        /* TEXT */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(student.birth), 1
+        /* TEXT */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(student.phone), 1
+        /* TEXT */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(student.id), 1
+        /* TEXT */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(student.id), 1
+        /* TEXT */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
+          href: "/editar-aluno",
+          "class": "link-edit-student"
+        }, {
+          "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+            return [_hoisted_13];
+          }),
+          _: 1
+          /* STABLE */
 
-      })])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_19, _hoisted_20, _hoisted_21, _hoisted_22, _hoisted_23, _hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_25, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
-        href: "/editar-aluno"
-      }, {
-        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_27];
-        }),
-        _: 1
-        /* STABLE */
-
-      })])])])])])])])];
+        })])])])]);
+      }), 128
+      /* KEYED_FRAGMENT */
+      ))])])])])];
     }),
     _: 1
     /* STABLE */
@@ -21201,7 +21169,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "html,\r\nbody {\r\n    margin: 0;\r\n    padding: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n}\r\n\r\n* {\r\n    outline: none;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n    text-decoration: none;\r\n}\r\n\r\n/* LAYOUT */\r\n.nav-layout {\r\n    display: flex;\r\n    align-items: center;\r\n    flex-wrap: wrap;\r\n    height: 50px;\r\n    justify-content: space-around;\r\n    background-color: rgb(51, 51, 51);\r\n    cursor: pointer;\r\n}\r\n\r\n.link-home {\r\n    color: aliceblue;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n    font-size: 20px;\r\n}\r\n\r\n.link-home:hover {\r\n    color: rgb(206, 206, 206);\r\n}\r\n\r\n/* HOME */\r\n\r\n.container-home {\r\n    display: flex;\r\n    flex-wrap: wrap;\r\n    justify-content: center;\r\n    align-items: center;\r\n    margin: auto;\r\n    width: 100%;\r\n}\r\n\r\n.box-home {\r\n    display: flex;\r\n    flex-wrap: wrap;\r\n    justify-content: space-around;\r\n    align-items: center;\r\n    width: 1200px;\r\n    height: 500px;\r\n}\r\n\r\n.options-home {\r\n    text-align: center;\r\n    width: 300px;\r\n    height: 300px;\r\n    background-color: aliceblue;\r\n    box-shadow: 2px -2px 5px rgba(0, 0, 0, 0.289);\r\n    transition: all linear 0.2s;\r\n    color: #000;\r\n}\r\n\r\n.options-home:hover {\r\n    width: 320px;\r\n    height: 320px;\r\n    transition: all linear 0.2s;\r\n}\r\n\r\n.img-container-home {\r\n    width: 100%;\r\n    height: 80%;\r\n    overflow: hidden;\r\n}\r\n\r\n.img-home {\r\n    -o-object-fit: cover;\r\n       object-fit: cover;\r\n    height: 100%;\r\n    width: 100%;\r\n    max-width: 400px;\r\n    max-height: 400px;\r\n    cursor: pointer;\r\n}\r\n\r\n.title-home {\r\n    font-size: 20px;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n}\r\n\r\n/* STUDENTS */\r\n\r\n.container-students {\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: center;\r\n    align-items: center;\r\n    width: 100%;\r\n    height: 90%;\r\n}\r\n\r\n.search-students-container {\r\n    margin: 50px;\r\n}\r\n\r\n.input-search-students {\r\n    width: 400px;\r\n    height: 35px;\r\n    background-color: rgb(216, 216, 216);\r\n    border: none;\r\n    padding: 0 10px;\r\n}\r\n\r\n.button-search-students {\r\n    background-color: rgba(100, 148, 237, 0.755);\r\n    color: aliceblue;\r\n    height: 35px;\r\n    font-size: 15px;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n    border: none;\r\n    cursor: pointer;\r\n}\r\n\r\n.button-search-students:hover {\r\n    background-color: rgba(58, 115, 221, 0.755);\r\n}\r\n\r\n.create-link-students {\r\n    color: #000;\r\n    margin-left: 20px;\r\n    font-size: 15px;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n    cursor: pointer;\r\n}\r\n\r\n.create-link-students:hover {\r\n    text-decoration: underline;\r\n}\r\n\r\n.table-students-container {\r\n    width: 1270px;\r\n    height: 500px;\r\n    overflow-y: scroll;\r\n    background-color: aliceblue;\r\n    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.35);\r\n}\r\n\r\n.table-students {\r\n    width: 100%;\r\n    text-align: center;\r\n}\r\n\r\n.table-students thead {\r\n    background-color: rgba(100, 148, 237, 0.755);\r\n    font-family: Arial;\r\n    color: #ffffff;\r\n}\r\n.table-students th,\r\n.table-students td {\r\n    padding: 15px;\r\n    font-family: Arial;\r\n}\r\n\r\n.table-students tbody {\r\n    font-size: 15px;\r\n}\r\n\r\n.table-students tbody tr:nth-child(2n) {\r\n    background-color: rgb(214, 214, 214);\r\n}\r\n\r\n.table-students tbody tr td:nth-child(1) {\r\n    width: 5%;\r\n}\r\n\r\n.table-students tbody tr td:nth-child(2) {\r\n    width: 20%;\r\n}\r\n\r\n.table-students tbody tr td:nth-child(3) {\r\n    width: 17%;\r\n}\r\n\r\n.table-students tbody tr td:nth-child(4) {\r\n    width: 5%;\r\n}\r\n\r\n.table-students tbody tr td:nth-child(5) {\r\n    width: 15%;\r\n}\r\n\r\n.table-students tbody tr td:nth-child(6) {\r\n    width: 25%;\r\n}\r\n\r\n.table-students tbody tr td:nth-child(7) {\r\n    width: 13%;\r\n}\r\n\r\n.button-remove-student {\r\n    margin-right: 10px;\r\n}\r\n\r\n/* STUDENTS EDIT*/\r\n\r\n.edit-student-container {\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    width: 100%;\r\n    height: 100%;\r\n}\r\n\r\n.box-edit-student-container {\r\n    margin-top: 70px;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    width: 1000px;\r\n    height: 500px;\r\n    overflow-y: scroll;\r\n    background-color: aliceblue;\r\n    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.453);\r\n}\r\n\r\n.form-edit-student-container {\r\n    width: 90%;\r\n    height: 90%;\r\n}\r\n\r\n.form-edit-student {\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: space-around;\r\n}\r\n\r\n.input-container-edit-student {\r\n    margin: 20px;\r\n    font-size: 17px;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n}\r\n\r\n.form-edit-student input {\r\n    padding: 0 10px;\r\n    width: 300px;\r\n    height: 35px;\r\n    background-color: rgb(208, 208, 208);\r\n    border: none;\r\n    border-radius: 5px;\r\n}\r\n\r\n.select-school-student {\r\n    margin-left: 30px;\r\n    width: auto;\r\n    height: 30px;\r\n    font-size: 16px;\r\n}\r\n\r\n.save-informations-edit-student {\r\n    margin: 20px auto;\r\n    width: 200px;\r\n    height: 30px;\r\n    border: none;\r\n    background-color: rgba(58, 115, 221, 0.755);\r\n    color: aliceblue;\r\n    font-size: 17px;\r\n    cursor: pointer;\r\n}\r\n\r\n.back-to-students {\r\n    margin: auto;\r\n}\r\n\r\n/* LEVEL */\r\n\r\n.level-container {\r\n    display: flex;\r\n    align-items: center;\r\n}\r\n\r\n.p-level-class {\r\n    margin-left: 30px;\r\n}\r\n\r\n.level-container input {\r\n    height: 14px;\r\n    width: 30px;\r\n    margin: 0;\r\n}\r\n\r\n.box-students-class {\r\n    width: 80%;\r\n    height: 400px;\r\n    background-color: aliceblue;\r\n    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.35);\r\n    overflow-y: scroll;\r\n}\r\n\r\n.align-students-class {\r\n    margin: 20px;\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: space-around;\r\n    align-items: center;\r\n    text-align: center;\r\n}\r\n\r\n.student-link-class {\r\n    margin: 10px;\r\n}\r\n\r\n.student-link-class:hover {\r\n    text-decoration: underline;\r\n}\r\n\r\n.message-error {\r\n    width: auto;\r\n    color: rgb(232, 34, 34);\r\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "html,\r\nbody {\r\n    margin: 0;\r\n    padding: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n}\r\n\r\n* {\r\n    outline: none;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n    text-decoration: none;\r\n}\r\n\r\n/* LAYOUT */\r\n.nav-layout {\r\n    display: flex;\r\n    align-items: center;\r\n    flex-wrap: wrap;\r\n    height: 50px;\r\n    justify-content: space-around;\r\n    background-color: rgb(51, 51, 51);\r\n    cursor: pointer;\r\n}\r\n\r\n.link-home {\r\n    color: aliceblue;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n    font-size: 20px;\r\n}\r\n\r\n.link-home:hover {\r\n    color: rgb(206, 206, 206);\r\n}\r\n\r\n/* HOME */\r\n\r\n.container-home {\r\n    display: flex;\r\n    flex-wrap: wrap;\r\n    justify-content: center;\r\n    align-items: center;\r\n    margin: auto;\r\n    width: 100%;\r\n}\r\n\r\n.box-home {\r\n    display: flex;\r\n    flex-wrap: wrap;\r\n    justify-content: space-around;\r\n    align-items: center;\r\n    width: 1200px;\r\n    height: 500px;\r\n}\r\n\r\n.options-home {\r\n    text-align: center;\r\n    width: 300px;\r\n    height: 300px;\r\n    background-color: aliceblue;\r\n    box-shadow: 2px -2px 5px rgba(0, 0, 0, 0.289);\r\n    transition: all linear 0.2s;\r\n    color: #000;\r\n}\r\n\r\n.options-home:hover {\r\n    width: 320px;\r\n    height: 320px;\r\n    transition: all linear 0.2s;\r\n}\r\n\r\n.img-container-home {\r\n    width: 100%;\r\n    height: 80%;\r\n    overflow: hidden;\r\n}\r\n\r\n.img-home {\r\n    -o-object-fit: cover;\r\n       object-fit: cover;\r\n    height: 100%;\r\n    width: 100%;\r\n    max-width: 400px;\r\n    max-height: 400px;\r\n    cursor: pointer;\r\n}\r\n\r\n.title-home {\r\n    font-size: 20px;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n}\r\n\r\n/* STUDENTS */\r\n\r\n.container-students {\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: center;\r\n    align-items: center;\r\n    width: 100%;\r\n    height: 90%;\r\n}\r\n\r\n.search-students-container {\r\n    margin: 50px;\r\n}\r\n\r\n.input-search-students {\r\n    width: 400px;\r\n    height: 35px;\r\n    background-color: rgb(216, 216, 216);\r\n    border: none;\r\n    padding: 0 10px;\r\n}\r\n\r\n.button-search-students {\r\n    background-color: rgba(100, 148, 237, 0.755);\r\n    color: aliceblue;\r\n    height: 35px;\r\n    font-size: 15px;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n    border: none;\r\n    cursor: pointer;\r\n}\r\n\r\n.button-search-students:hover {\r\n    background-color: rgba(58, 115, 221, 0.755);\r\n}\r\n\r\n.create-link-students {\r\n    color: #000;\r\n    margin-left: 20px;\r\n    font-size: 15px;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n    cursor: pointer;\r\n}\r\n\r\n.create-link-students:hover {\r\n    text-decoration: underline;\r\n}\r\n\r\n.table-students-container {\r\n    width: 1270px;\r\n    height: 500px;\r\n    overflow-y: scroll;\r\n    background-color: aliceblue;\r\n    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.35);\r\n}\r\n\r\n.table-students {\r\n    width: 100%;\r\n    text-align: center;\r\n}\r\n\r\n.table-students thead {\r\n    background-color: rgba(100, 148, 237, 0.755);\r\n    font-family: Arial;\r\n    color: #ffffff;\r\n}\r\n.table-students th,\r\n.table-students td {\r\n    padding: 15px;\r\n    font-family: Arial;\r\n}\r\n\r\n.table-students tbody {\r\n    font-size: 15px;\r\n}\r\n\r\n.table-students tbody tr:nth-child(2n) {\r\n    background-color: rgb(214, 214, 214);\r\n}\r\n\r\n.table-students tbody tr td:nth-child(1) {\r\n    width: 5%;\r\n}\r\n\r\n.table-students tbody tr td:nth-child(2) {\r\n    width: 20%;\r\n}\r\n\r\n.table-students tbody tr td:nth-child(3) {\r\n    width: 17%;\r\n}\r\n\r\n.table-students tbody tr td:nth-child(4) {\r\n    width: 5%;\r\n}\r\n\r\n.table-students tbody tr td:nth-child(5) {\r\n    width: 15%;\r\n}\r\n\r\n.table-students tbody tr td:nth-child(6) {\r\n    width: 25%;\r\n}\r\n\r\n.table-students tbody tr td:nth-child(7) {\r\n    width: 13%;\r\n}\r\n\r\n.button-remove-student {\r\n    margin-right: 10px;\r\n}\r\n\r\n.form-action-students {\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n}\r\n\r\n.link-edit-student {\r\n    margin-top: 10px;\r\n}\r\n\r\n/* STUDENTS EDIT*/\r\n\r\n.edit-student-container {\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    width: 100%;\r\n    height: 100%;\r\n}\r\n\r\n.box-edit-student-container {\r\n    margin-top: 70px;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    width: 1000px;\r\n    height: 500px;\r\n    overflow-y: scroll;\r\n    background-color: aliceblue;\r\n    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.453);\r\n}\r\n\r\n.form-edit-student-container {\r\n    width: 90%;\r\n    height: 90%;\r\n}\r\n\r\n.form-edit-student {\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: space-around;\r\n}\r\n\r\n.input-container-edit-student {\r\n    margin: 20px;\r\n    font-size: 17px;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n}\r\n\r\n.form-edit-student input {\r\n    padding: 0 10px;\r\n    width: 300px;\r\n    height: 35px;\r\n    background-color: rgb(208, 208, 208);\r\n    border: none;\r\n    border-radius: 5px;\r\n}\r\n\r\n.select-school-student {\r\n    margin-left: 30px;\r\n    width: auto;\r\n    height: 30px;\r\n    font-size: 16px;\r\n}\r\n\r\n.save-informations-edit-student {\r\n    margin: 20px auto;\r\n    width: 200px;\r\n    height: 30px;\r\n    border: none;\r\n    background-color: rgba(58, 115, 221, 0.755);\r\n    color: aliceblue;\r\n    font-size: 17px;\r\n    cursor: pointer;\r\n}\r\n\r\n.back-to-students {\r\n    margin: auto;\r\n}\r\n\r\n/* LEVEL */\r\n\r\n.level-container {\r\n    display: flex;\r\n    align-items: center;\r\n}\r\n\r\n.p-level-class {\r\n    margin-left: 30px;\r\n}\r\n\r\n.level-container input {\r\n    height: 14px;\r\n    width: 30px;\r\n    margin: 0;\r\n}\r\n\r\n.box-students-class {\r\n    width: 80%;\r\n    height: 400px;\r\n    background-color: aliceblue;\r\n    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.35);\r\n    overflow-y: scroll;\r\n}\r\n\r\n.align-students-class {\r\n    margin: 20px;\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: space-around;\r\n    align-items: center;\r\n    text-align: center;\r\n}\r\n\r\n.student-link-class {\r\n    margin: 10px;\r\n}\r\n\r\n.student-link-class:hover {\r\n    text-decoration: underline;\r\n}\r\n\r\n.message-error {\r\n    width: auto;\r\n    color: rgb(232, 34, 34);\r\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

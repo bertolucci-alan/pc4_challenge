@@ -9,6 +9,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class StudentController extends Controller
 {
+    public function index()
+    {
+        $students = Student::all();
+
+        return response()->json(['students' => $students]);
+    }
+
     public function register(Request $request)
     {
         $student = Student::create($request->only('name', 'email', 'phone', 'birth', 'gender'));
