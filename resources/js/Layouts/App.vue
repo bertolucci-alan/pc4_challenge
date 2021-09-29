@@ -10,11 +10,12 @@
 
 <script>
 import { Link } from '@inertiajs/inertia-vue3';
+import { defineComponent } from '@vue/runtime-core';
 import '../../../public/css/index.css';
-export default {
+export default defineComponent({
     components: {
         Link
     }
  
-};
+})
 </script>
