@@ -12,4 +12,19 @@ class PagesController extends Controller
     {
         return Inertia::render('Home');
     }
+
+    public function students()
+    {
+        return Inertia::render('Student/List');
+    }
+
+    public function classes()
+    {
+        return Inertia::render('Class/List');
+    }
+
+    public function schools()
+    {
+        return Inertia::render('School/List');
+    }
 }

@@ -2,26 +2,26 @@
     <layout>
         <div class="container-home">    
             <div class="box-home">
-                <div class="options-home">
+                <Link href="/alunos" class="options-home">
                     <div class="img-container-home">
                         <img src="assets/students.jpg" alt="" class="img-home">
                     </div>
                     <p class="title-home">Alunos</p>
-                </div>
+                </Link>
 
-                <div class="options-home">
+                <Link href="/alunos" class="options-home">
                     <div class="img-container-home">
                         <img src="assets/class.jpg" alt="" class="img-home">
                     </div>
                     <p class="title-home">Turmas</p>
-                </div>
+                </Link>
 
-                <div class="options-home">
+                <Link href="/alunos" class="options-home">
                     <div class="img-container-home">
                         <img src="assets/school.jpg" alt="" class="img-home">
                     </div>
                     <p class="title-home">Escolas</p>
-                </div>
+                </Link>
             </div>
         </div>    
     </layout>
@@ -29,8 +29,13 @@
 
 <script>
 import Layout from "../Layouts/App.vue";
+import { Link } from '@inertiajs/inertia-vue3';
 
 export default{
       layout: Layout,
+
+      components: {
+          Link,
+      }
 }
 </script>

@@ -18,3 +18,12 @@ use Inertia\Inertia;
 
 Route::get('/', [PagesController::class, 'home'])
     ->name('home');
+
+Route::get('/alunos', [PagesController::class, 'students'])
+    ->name('students');
+
+Route::get('/turmas', [PagesController::class, 'classes'])
+    ->name('classes');
+
+Route::get('/escolas', [PagesController::class, 'schools'])
+    ->name('schools');
