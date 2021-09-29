@@ -313,3 +313,8 @@ body {
 .student-link-class:hover {
     text-decoration: underline;
 }
+
+.message-error {
+    width: auto;
+    color: rgb(232, 34, 34);
+}
