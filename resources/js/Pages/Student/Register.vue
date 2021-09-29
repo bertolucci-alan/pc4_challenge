@@ -116,7 +116,7 @@ export default {
 
             if(this.valid){
                 axios.post('api/register-student', this.forms).then((response) => {
-                    console.log(response);
+                    location.href="/alunos";
                 })
             }
         }

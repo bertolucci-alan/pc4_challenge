@@ -2,11 +2,12 @@
     <layout>
         <div class="container-students">
             <div class="search-students-container">
-                <form action="">
-                    <input type="text" class="input-search-students" placeholder="Digite o nome do aluno...">
+                <form @submit.prevent="searchStudent">
+                    <input type="text" v-model="forms.search" class="input-search-students" placeholder="Digite o nome do aluno...">
                     <button type="submit" class="button-search-students">Pesquisar</button>
                     <Link href="/registrar-aluno" class="create-link-students">Registrar novo aluno</Link>
                 </form>
+            <p v-if="errors.search" class="message-error">{{ errors.search }}</p>
             </div>
             <div class="table-students-container">
                 <table class="table-students">
@@ -35,7 +36,7 @@
                                 <form action="">
                                     <div  class="form-action-students">
                                         <button class="button-remove-student">Excluir</button>
-                                        <Link href="/editar-aluno" class="link-edit-student">Editar</Link>
+                                        <Link :href="link + student.name.split(' ').join('-').toLowerCase() + '/' + student.id" class="link-edit-student">Editar</Link>
                                     </div>
                                 </form>
                             </td>
@@ -55,15 +56,38 @@ export default {
 
     data() {
         return {
-            students: {}
+            forms: {
+                search: null,
+            },
+            students: {},
+            link: "/editar-aluno/",
+            errors: {},
+            valid: null,
+            studentsSearch: {},
         }
     },
 
     mounted() {
         axios.get('api/students').then((response) => {
             this.students = response.data.students;
-            console.log(response);
         })
+    },
+
+    methods: {
+        searchStudent() {
+            this.valid = true;
+            
+            if(!this.forms.search) {
+                this.valid = false,
+                this.errors.search = "Preencha o campo para pesquisar.";
+            }
+
+            if(this.valid) {
+                axios.post('/api/search-students', this.forms).then((response) => {
+                    this.students = response.data.students;
+                });
+            }
+        }
     },
 
     components: {
