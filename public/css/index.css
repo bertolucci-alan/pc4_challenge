@@ -328,3 +328,16 @@ body {
     width: auto;
     color: rgb(232, 34, 34);
 }
+
+.add-classes-student {
+    display: flex;
+    margin-top: 40px;
+    justify-content: center;
+    width: 140px;
+    height: 30px;
+    line-height: 0;
+    background-color: rgba(58, 115, 221, 0.755);
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.412);
+    color: #ffffff;
+    cursor: pointer;
+}
