@@ -103,7 +103,7 @@ export default {
             }
 
             if(this.valid) {
-                axios.post('/api/update-student', this.forms).then((response) => {
+                axios.put('/api/update-student', this.forms).then((response) => {
                    location.href = "/alunos";
                });
             }

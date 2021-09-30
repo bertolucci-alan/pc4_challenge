@@ -31,10 +31,10 @@ Route::get('/escolas', [PagesController::class, 'schools'])
 Route::get('/editar-aluno/{name}/{id}', [PagesController::class, 'editStudent'])
     ->name('student.edit.render');
 
-Route::get('/editar-turma', [PagesController::class, 'editClass'])
+Route::get('/editar-turma/{name}/{id}', [PagesController::class, 'editClass'])
     ->name('class.edit.render');
 
-Route::get('/editar-escola', [PagesController::class, 'editSchool'])
+Route::get('/editar-escola/{name}/{id}', [PagesController::class, 'editSchool'])
     ->name('school.edit.render');
 
 Route::get('/registrar-aluno', [PagesController::class, 'registerStudent'])

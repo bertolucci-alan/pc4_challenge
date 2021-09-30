@@ -2,11 +2,12 @@
     <layout>
         <div class="container-students">
             <div class="search-students-container">
-                <form action="">
-                    <input type="text" class="input-search-students" placeholder="Digite o nome da escola...">
+                <form @submit.prevent="formSearchSchool">
+                    <input type="text" v-model="forms.search" class="input-search-students" placeholder="Digite o nome da escola...">
                     <button type="submit" class="button-search-students">Pesquisar</button>
                     <Link href="/registrar-escola" class="create-link-students">Registrar nova escola</Link>
                 </form>
+                <p v-if="errors.search" class="message-error">{{ errors.search }}</p>
             </div>
             <div class="table-students-container">
                 <table class="table-students">
@@ -28,8 +29,8 @@
                             <td>{{school.id}}</td>
                             <td>{{school.id}}</td>
                             <td>
-                                <form action="">
-                                    <button class="button-remove-student">Excluir</button>
+                                <form @submit.prevent="formDeleteSchool(school.id)">
+                                    <button type="submit" class="button-remove-student">Excluir</button>
                                     <Link :href="link + school.name.split(' ').join('-').toLowerCase() + '/' + school.id" class="link-edit-student">Editar</Link>
                                 </form>
                             </td>
@@ -47,8 +48,38 @@ import Layout from '../../Layouts/App.vue';
 export default {
     data() {
         return {
+            forms: {
+                search: null,
+            },
+            errors: {},
+            valid: null,
             schools: {},
             link: "/editar-escola/",
+        }
+    },
+
+    methods: {
+        formSearchSchool() {
+            this.errors = {};
+            this.valid = true;
+
+            if(!this.forms.search){
+                this.valid = false, 
+                this.errors.search = "Digite o nome da escola para pesquisar!";
+            }
+
+            if(this.valid) {
+                axios.post('/api/search-schools', this.forms).then((response) => {
+                    this.schools = response.data.schools;
+                });
+            }
+        },
+
+        formDeleteSchool(value) {
+
+            axios.delete('api/delete-school/' + value).then((response) => {
+                location.href = "/escolas";
+            });
         }
     },
 

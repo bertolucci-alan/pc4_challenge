@@ -21,4 +21,25 @@ class SchoolController extends Controller
 
         return response()->json();
     }
+
+    public function update(Request $request)
+    {
+
+        $school = School::find($request->id)->update($request->only('name', 'street'));
+
+        return response()->json(['school' => $school]);
+    }
+
+    public function search(Request $request)
+    {
+        $schools = School::where('name', 'LIKE', '%' . $request->search . '%')->get();
+        return response()->json(['schools' => $schools]);
+    }
+
+    public function delete(School $id)
+    {
+        $id->delete();
+
+        return response()->json(['school' => $id]);
+    }
 }

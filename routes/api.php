@@ -26,14 +26,23 @@ Route::get('/students', [StudentController::class, 'index'])
 Route::post('/search-students', [StudentController::class, 'search'])
     ->name('student.search');
 
-Route::post('/update-student', [StudentController::class, 'update'])
+Route::put('/update-student', [StudentController::class, 'update'])
     ->name('student.update');
 
 Route::post('/register-student', [StudentController::class, 'register'])
     ->name('student.register');
 
+Route::get('/schools', [SchoolController::class, 'index'])
+    ->name('school.index');
+
+Route::post('/search-schools', [SchoolController::class, 'search'])
+    ->name('school.search');
+
 Route::post('/register-school', [SchoolController::class, 'register'])
     ->name('school.register');
 
-Route::get('/schools', [SchoolController::class, 'index'])
-    ->name('school.index');
+Route::put('/update-school', [SchoolController::class, 'update'])
+    ->name('school.update');
+
+Route::delete('/delete-school/{id}', [SchoolController::class, 'delete'])
+    ->name('school.delete');

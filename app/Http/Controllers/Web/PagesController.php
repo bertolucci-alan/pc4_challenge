@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\School;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -41,9 +42,11 @@ class PagesController extends Controller
         return Inertia::render('Class/Update');
     }
 
-    public function editSchool()
+    public function editSchool($name, School $id)
     {
-        return Inertia::render('School/Update');
+        return Inertia::render('School/Update', [
+            'school' => $id,
+        ]);
     }
 
     public function registerStudent()
