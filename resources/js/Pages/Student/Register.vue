@@ -61,12 +61,16 @@
                                     Selecione a turma do aluno
                                 </option>
                                 <option value="3° ano do médio 2020">3° ano do médio 2020</option>
+                                <option value="4° ano do médio 2020">4° ano do médio 2020</option>
+                                <option value="1° ano do médio 2020">1° ano do médio 2020</option>
+                                <option value="5° ano do médio 2020">5° ano do médio 2020</option>
+                                <option value="6° ano do médio 2020">6° ano do médio 2020</option>
                             </select>
+                            <p v-if="errors.class" class="message-error">{{ errors.class }}</p>
+                            <div @click="addClass" class="add-classes-student"><p>Adicionar Turma</p></div>
                         </div>
-
-                        <button class="save-informations-edit-student">
-                            Salvar alterações
-                        </button>
+                        <ul id="classesList"></ul>
+                        <button class="save-informations-edit-student">Salvar alterações</button>
                         <Link href="/alunos" class="back-to-students">Voltar</Link>
                     </form>
                 </div>
@@ -89,6 +93,7 @@ export default {
                 birth: null,
                 gender: null,
                 school: null,
+                classes: [],
                 class: null,
             },
             errors: {},
@@ -97,6 +102,22 @@ export default {
     },
 
     methods: {
+        addClass() {
+            this.errors = {};
+
+            if(!this.forms.class) {
+                return this.errors.class = "Selecione uma turma.";
+            }
+
+            if(this.forms.classes.find(element => element === this.forms.class)) {
+                return this.errors.class = "Aluno já incluído na turma.";
+            }
+
+            let ul = document.querySelector('#classesList');
+            ul.innerHTML += "<li>" + this.forms.class + "</li>"
+            this.forms.classes.push(this.forms.class);
+        },
+
         formRegisterStudent() {
             this.errors = {};
             this.valid = true;
