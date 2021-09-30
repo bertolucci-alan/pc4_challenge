@@ -34,3 +34,6 @@ Route::post('/register-student', [StudentController::class, 'register'])
 
 Route::post('/register-school', [SchoolController::class, 'register'])
     ->name('school.register');
+
+Route::get('/schools', [SchoolController::class, 'index'])
+    ->name('school.index');

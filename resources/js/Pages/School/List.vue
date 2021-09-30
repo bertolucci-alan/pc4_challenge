@@ -21,16 +21,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Etec monsenhor antonio ba</td>
-                            <td>Pinchas ditisndias 32</td>
-                            <td>123</td>
-                            <td>121.232</td>
+                        <tr v-for="school in schools" :key="school.id">
+                            <td>{{school.id}}</td>
+                            <td>{{school.name}}</td>
+                            <td>{{school.street}}</td>
+                            <td>{{school.id}}</td>
+                            <td>{{school.id}}</td>
                             <td>
                                 <form action="">
                                     <button class="button-remove-student">Excluir</button>
-                                    <Link href="/editar-escola">Editar</Link>
+                                    <Link :href="link + school.name.split(' ').join('-').toLowerCase() + '/' + school.id" class="link-edit-student">Editar</Link>
                                 </form>
                             </td>
                         </tr>
@@ -45,6 +45,18 @@
 import { Link } from '@inertiajs/inertia-vue3';
 import Layout from '../../Layouts/App.vue';
 export default {
+    data() {
+        return {
+            schools: {},
+            link: "/editar-escola/",
+        }
+    },
+
+    mounted() {
+        axios.get('api/schools').then((response) => {
+            this.schools = response.data.schools;
+        })
+    },
 
     components: {
         Link,
