@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\SchoolController;
 use App\Http\Controllers\Api\StudentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,3 +31,6 @@ Route::post('/update-student', [StudentController::class, 'update'])
 
 Route::post('/register-student', [StudentController::class, 'register'])
     ->name('student.register');
+
+Route::post('/register-school', [SchoolController::class, 'register'])
+    ->name('school.register');
