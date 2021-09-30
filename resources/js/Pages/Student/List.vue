@@ -7,7 +7,6 @@
                     <button type="submit" class="button-search-students">Pesquisar</button>
                     <Link href="/registrar-aluno" class="create-link-students">Registrar novo aluno</Link>
                 </form>
-            <p v-if="errors.search" class="message-error">{{ errors.search }}</p>
             </div>
             <div class="table-students-container">
                 <table class="table-students">
@@ -61,7 +60,6 @@ export default {
             },
             students: {},
             link: "/editar-aluno/",
-            errors: {},
             valid: null,
             studentsSearch: {},
         }
@@ -78,8 +76,9 @@ export default {
             this.valid = true;
             
             if(!this.forms.search) {
-                this.valid = false,
-                this.errors.search = "Preencha o campo para pesquisar.";
+                return axios.get('api/students').then((response) => {
+                    this.students = response.data.students;
+                })
             }
 
             if(this.valid) {

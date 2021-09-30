@@ -7,7 +7,7 @@
                     <button type="submit" class="button-search-students">Pesquisar</button>
                     <Link href="/registrar-escola" class="create-link-students">Registrar nova escola</Link>
                 </form>
-                <p v-if="errors.search" class="message-error">{{ errors.search }}</p>
+                
             </div>
             <div class="table-students-container">
                 <table class="table-students">
@@ -51,7 +51,6 @@ export default {
             forms: {
                 search: null,
             },
-            errors: {},
             valid: null,
             schools: {},
             link: "/editar-escola/",
@@ -60,12 +59,12 @@ export default {
 
     methods: {
         formSearchSchool() {
-            this.errors = {};
             this.valid = true;
 
             if(!this.forms.search){
-                this.valid = false, 
-                this.errors.search = "Digite o nome da escola para pesquisar!";
+                return axios.get('api/schools').then((response) => {
+                    this.schools = response.data.schools;
+                })
             }
 
             if(this.valid) {
