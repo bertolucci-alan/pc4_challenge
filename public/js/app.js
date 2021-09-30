@@ -19438,7 +19438,7 @@ __webpack_require__.r(__webpack_exports__);
       this.errors = {};
 
       if (!this.forms["class"]) {
-        return his.errors["class"] = "Selecione uma turma.";
+        return this.errors["class"] = "Selecione uma turma.";
       }
 
       if (this.forms.classes.find(function (element) {
@@ -19450,7 +19450,6 @@ __webpack_require__.r(__webpack_exports__);
       var ul = document.querySelector('#classesList');
       ul.innerHTML += "<li>" + this.forms["class"] + "</li>";
       this.forms.classes.push(this.forms["class"]);
-      console.log(this.forms.classes);
     },
     formRegisterStudent: function formRegisterStudent() {
       this.errors = {};

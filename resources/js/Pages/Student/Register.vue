@@ -106,7 +106,7 @@ export default {
             this.errors = {};
 
             if(!this.forms.class) {
-                return his.errors.class = "Selecione uma turma.";
+                return this.errors.class = "Selecione uma turma.";
             }
 
             if(this.forms.classes.find(element => element === this.forms.class)) {
@@ -116,7 +116,6 @@ export default {
             let ul = document.querySelector('#classesList');
             ul.innerHTML += "<li>" + this.forms.class + "</li>"
             this.forms.classes.push(this.forms.class);
-            console.log(this.forms.classes);
         },
 
         formRegisterStudent() {
