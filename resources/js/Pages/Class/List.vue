@@ -2,8 +2,8 @@
     <layout>
         <div class="container-students">
             <div class="search-students-container">
-                <form action="">
-                    <input type="text" class="input-search-students" placeholder="Pesquise a turma pelo ano...">
+                <form @submit.prevent="searchClasses">
+                    <input type="text" class="input-search-students" v-model="forms.search" placeholder="Pesquise a turma pelo ano...">
                     <button type="submit" class="button-search-students">Pesquisar</button>
                     <Link href="/registrar-turma" class="create-link-students">Registrar nova turma</Link>
                 </form>
@@ -54,10 +54,29 @@ export default {
     data() {
         return {
             forms: {
-
+                search: null,
             },
             classes: {},
             link: "/editar-turma/",
+        }
+    },
+
+    methods: {
+        searchClasses() {
+            this.valid = true;
+            
+            if(!this.forms.search) {
+                return axios.get('api/classes').then((response) => {
+                    this.classes = response.data.classes;
+                })
+            }
+
+            if(this.valid) {
+                axios.post('/api/search-classes', this.forms).then((response) => {
+                    // this.classes = response.data.classes;
+                    console.log(response);
+                });
+            }
         }
     },
 

@@ -38,6 +38,9 @@ Route::put('/update-student', [StudentController::class, 'update'])
 Route::post('/register-student', [StudentController::class, 'register'])
     ->name('student.register');
 
+Route::delete('/delete-student/{id}', [StudentController::class, 'delete'])
+    ->name('student.delete');
+
 /**
  * CLASSES
  */
@@ -50,6 +53,9 @@ Route::post('/register-class', [ClassController::class, 'register'])
 
 Route::put('/update-class', [ClassController::class, 'update'])
     ->name('class.update');
+
+Route::post('/search-classes', [ClassController::class, 'search'])
+    ->name('class.search');
 
 /**
  * SCHOOLS

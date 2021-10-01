@@ -36,4 +36,11 @@ class StudentController extends Controller
         $students = Student::where('name', 'LIKE', '%' . $request->search . '%')->get();
         return response()->json(['students' => $students]);
     }
+
+    public function delete(Student $id)
+    {
+        $id->delete();
+
+        return response()->json();
+    }
 }

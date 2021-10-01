@@ -32,9 +32,9 @@
                             <td>{{ student.id }}</td>
                             <td>{{ student.id }}</td>
                             <td>
-                                <form action="">
+                                <form @submit.prevent="formDeleteStudent(student.id)">
                                     <div  class="form-action-students">
-                                        <button class="button-remove-student">Excluir</button>
+                                        <button type="submit" class="button-remove-student">Excluir</button>
                                         <Link :href="link + student.name.split(' ').join('-').toLowerCase() + '/' + student.id" class="link-edit-student">Editar</Link>
                                     </div>
                                 </form>
@@ -86,6 +86,13 @@ export default {
                     this.students = response.data.students;
                 });
             }
+
+        },
+
+        formDeleteStudent(value) {
+            axios.delete('api/delete-student/' + value).then((response) => {
+                location.href = "/alunos";
+            })
         }
     },
 

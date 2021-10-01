@@ -15,6 +15,12 @@ class ClassController extends Controller
         return response()->json(['classes' => $classes]);
     }
 
+    public function search(Request $request)
+    {
+        $classes = Classes::where('year', 'LIKE',  $request->search)->get();
+        return response()->json(['students' => $request->search]);
+    }
+
     public function register(Request $request)
     {
         $class = Classes::create($request->all());
