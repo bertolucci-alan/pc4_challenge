@@ -17,8 +17,8 @@ class ClassController extends Controller
 
     public function search(Request $request)
     {
-        $classes = Classes::where('year', 'LIKE',  $request->search)->get();
-        return response()->json(['students' => $request->search]);
+        $classes = Classes::where('year', 'LIKE',  $request->search)->with('school')->get();
+        return response()->json(['classes' => $classes]);
     }
 
     public function register(Request $request)

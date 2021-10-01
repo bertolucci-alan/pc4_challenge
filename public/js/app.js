@@ -19193,7 +19193,8 @@ __webpack_require__.r(__webpack_exports__);
         search: null
       },
       classes: {},
-      link: "/editar-turma/"
+      link: "/editar-turma/",
+      valid: null
     };
   },
   methods: {
@@ -19210,8 +19211,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.valid) {
         axios.post('/api/search-classes', this.forms).then(function (response) {
-          // this.classes = response.data.classes;
-          console.log(response);
+          _this.classes = response.data.classes;
         });
       }
     }
@@ -19974,6 +19974,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
           return $data.forms.search = $event;
         }),
+        name: "search",
         placeholder: "Pesquise a turma pelo ano..."
       }, null, 512
       /* NEED_PATCH */
