@@ -6,34 +6,34 @@
                     <form @submit.prevent="formRegisterClass" class="form-edit-student">
                         <div class="input-container-edit-student">
                             <label for="year">Ano: </label>
-                            <input type="text" v-model="forms.year" name="year">
+                            <input type="text" v-model="forms.year" name="year" placeholder="Ex:2020">
                         </div>
                         <p v-if="errors.year" class="message-error">{{ errors.year }}</p>
 
                         <div class="input-container-edit-student level-container">
                             <label for="level">Nível de ensino: </label>
-                            <p class="p-level-class">Fundamental</p><input type="radio" v-model="forms.level"  name="level" value="elementary ">
+                            <p class="p-level-class">Fundamental</p><input type="radio" v-model="forms.level"  name="level" value="elementary">
                             <p class="p-level-class">Médio</p><input type="radio" v-model="forms.level"  name="level" value="high">
                         </div>
                         <p v-if="errors.level" class="message-error">{{ errors.level }}</p>
 
                         <div class="input-container-edit-student">
                             <label for="grade">Série: </label>
-                            <input type="text" name="grade">
+                            <input type="text" v-model="forms.grade" name="grade" placeholder="Ex: 3">
                         </div>
                         <p v-if="errors.grade" class="message-error">{{ errors.grade }}</p>
 
                         <div class="input-container-edit-student level-container">
                             <label for="level">Turno: </label>
-                            <p class="p-level-class">Matutino</p><input type="radio" v-model="forms.day" name="level" value="morning">
-                            <p class="p-level-class">Vespertino</p><input type="radio" v-model="forms.day" name="level" value="afternoon">
-                            <p class="p-level-class">Noturno</p><input type="radio" v-model="forms.day" name="level" value="night">
+                            <p class="p-level-class">Matutino</p><input type="radio" v-model="forms.day" name="day" value="morning">
+                            <p class="p-level-class">Vespertino</p><input type="radio" v-model="forms.day" name="day" value="afternoon">
+                            <p class="p-level-class">Noturno</p><input type="radio" v-model="forms.day" name="day" value="night">
                         </div>
                         <p v-if="errors.day" class="message-error">{{ errors.day }}</p>
 
                         <div class="input-container-edit-student">
                             <label for="gender">Escola: </label>
-                            <select  name="" v-model="forms.school" id="" class="select-school-student">
+                            <select  name="" v-model="forms.school_id" id="" class="select-school-student">
                                 <option value="" selected disabled>Selecione a escola do aluno</option>
                                 <option v-for="school in schools" :key="school.id" :value="school.id">{{ school.name }}</option>
                             </select>
@@ -60,7 +60,7 @@ export default {
                 level: null,
                 grade:null,
                 day: null,
-                school:null,
+                school_id:null,
             },
             schools: {},
             errors: {},
@@ -93,14 +93,14 @@ export default {
                 this.errors.day = "Turno da escola obrigatório!";
             }
 
-            if(!this.forms.school){
+            if(!this.forms.school_id){
                 this.valid = false;
                 this.errors.school = "Escola obrigatória!";
             }
 
             if(this.valid) {
                 axios.post('api/register-class', this.forms).then((response) => {
-                    console.log(response);
+                    location.href = "/turmas"
                 })
             }
 

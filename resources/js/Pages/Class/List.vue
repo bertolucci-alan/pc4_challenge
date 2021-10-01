@@ -17,22 +17,26 @@
                             <th>Nível de ensino</th>
                             <th>Série</th>
                             <th>Turno</th>
+                            <th>Escola</th>
                             <th>Alunos</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>2019</td>
-                            <td>médio</td>
-                            <td>3</td>
-                            <td>noturno</td>
-                            <th>22</th>
+                        <tr v-for="clasS in classes" :key=clasS.id>
+                            <td>{{ clasS.id }}</td>
+                            <td>{{ clasS.year }}</td>
+                            <td>{{ clasS.level }}</td>
+                            <td>{{ clasS.grade }}</td>
+                            <td>{{ clasS.day }}</td>
+                            <td>{{ clasS.school.name }}</td>
+                            <td>{{ clasS.id }}</td>
                             <td>
                                 <form action="">
-                                    <button class="button-remove-student">Excluir</button>
-                                    <Link href="/editar-turma">Editar</Link>
+                                    <div  class="form-action-students">
+                                        <button class="button-remove-student">Excluir</button>
+                                        <Link :href="link + clasS.id" class="link-edit-student">Editar</Link>
+                                    </div>
                                 </form>
                             </td>
                         </tr>
@@ -47,6 +51,21 @@
 import { Link } from '@inertiajs/inertia-vue3';
 import Layout from '../../Layouts/App.vue';
 export default {
+    data() {
+        return {
+            forms: {
+
+            },
+            classes: {},
+            link: "/editar-turma/",
+        }
+    },
+
+    mounted() {
+        axios.get('api/classes').then((response) => {
+            this.classes = response.data.classes;
+        })
+    },
 
     components: {
         Link,
