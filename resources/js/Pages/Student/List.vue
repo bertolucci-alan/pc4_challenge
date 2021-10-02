@@ -7,7 +7,6 @@
                     <button type="submit" class="button-search-students">Pesquisar</button>
                     <Link href="/registrar-aluno" class="create-link-students">Registrar novo aluno</Link>
                 </form>
-            <p v-if="errors.search" class="message-error">{{ errors.search }}</p>
             </div>
             <div class="table-students-container">
                 <table class="table-students">
@@ -18,8 +17,8 @@
                             <th>E-mail</th>
                             <th>Nascimento</th>
                             <th>Telefone</th>
-                            <th>Turmas</th>
                             <th>Escola</th>
+                            <th>Turmas</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -30,12 +29,12 @@
                             <td>{{ student.email }}</td>
                             <td>{{ student.birth }}</td>
                             <td>{{ student.phone }}</td>
-                            <td>{{ student.id }}</td>
+                            <td>{{ student.school.name }}</td>
                             <td>{{ student.id }}</td>
                             <td>
-                                <form action="">
+                                <form @submit.prevent="formDeleteStudent(student.id)">
                                     <div  class="form-action-students">
-                                        <button class="button-remove-student">Excluir</button>
+                                        <button type="submit" class="button-remove-student">Excluir</button>
                                         <Link :href="link + student.name.split(' ').join('-').toLowerCase() + '/' + student.id" class="link-edit-student">Editar</Link>
                                     </div>
                                 </form>
@@ -61,7 +60,6 @@ export default {
             },
             students: {},
             link: "/editar-aluno/",
-            errors: {},
             valid: null,
             studentsSearch: {},
         }
@@ -78,8 +76,10 @@ export default {
             this.valid = true;
             
             if(!this.forms.search) {
-                this.valid = false,
-                this.errors.search = "Preencha o campo para pesquisar.";
+                this.valid = false;
+                return axios.get('api/students').then((response) => {
+                    this.students = response.data.students;
+                })
             }
 
             if(this.valid) {
@@ -87,6 +87,13 @@ export default {
                     this.students = response.data.students;
                 });
             }
+
+        },
+
+        formDeleteStudent(value) {
+            axios.delete('api/delete-student/' + value).then((response) => {
+                location.href = "/alunos";
+            })
         }
     },
 

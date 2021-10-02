@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Classes;
 use App\Models\Student;
+use App\Models\Student_Class;
 use Illuminate\Database\Seeder;
 
 class StudentSeeder extends Seeder
@@ -14,6 +16,6 @@ class StudentSeeder extends Seeder
      */
     public function run()
     {
-        Student::factory(10)->count(10)->create();
+        $student = Student::factory(10)->count(50)->create();
     }
 }

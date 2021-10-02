@@ -2,18 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Student;
-use Carbon\Carbon;
+use App\Models\Classes;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class StudentFactory extends Factory
+class ClassFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Student::class;
+    protected $model = Classes::class;
 
     /**
      * Define the model's default state.
@@ -24,9 +23,10 @@ class StudentFactory extends Factory
     {
         return [
             'school_id' => $this->faker->randomDigit(),
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'birth' => Carbon::now(),
+            'year' => $this->faker->year($max = 'now'),
+            'grade' => $this->faker->randomDigit(),
+            'level' => $this->faker->optional($default = 'elementary')->word,
+            'day' => $this->faker->optional($default = 'moornign')->word,
         ];
     }
 }

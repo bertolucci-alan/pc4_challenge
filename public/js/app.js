@@ -19187,9 +19187,45 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  layout: _Layouts_App_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+  data: function data() {
+    return {
+      forms: {
+        search: null
+      },
+      classes: {},
+      link: "/editar-turma/",
+      valid: null
+    };
+  },
+  methods: {
+    searchClasses: function searchClasses() {
+      var _this = this;
+
+      this.valid = true;
+
+      if (!this.forms.search) {
+        return axios.get('api/classes').then(function (response) {
+          _this.classes = response.data.classes;
+        });
+      }
+
+      if (this.valid) {
+        axios.post('/api/search-classes', this.forms).then(function (response) {
+          _this.classes = response.data.classes;
+        });
+      }
+    }
+  },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    axios.get('api/classes').then(function (response) {
+      _this2.classes = response.data.classes;
+    });
+  },
   components: {
-    Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Link
+    Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Link,
+    Layout: _Layouts_App_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   }
 });
 
@@ -19211,9 +19247,67 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  layout: _Layouts_App_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+  data: function data() {
+    return {
+      forms: {
+        year: null,
+        level: null,
+        grade: null,
+        day: null,
+        school_id: null
+      },
+      schools: {},
+      errors: {},
+      valid: null
+    };
+  },
+  methods: {
+    formRegisterClass: function formRegisterClass() {
+      this.errors = {};
+      this.valid = true;
+
+      if (!this.forms.year) {
+        this.valid = false;
+        this.errors.year = "Ano da turma obrigatório!";
+      }
+
+      if (!this.forms.level) {
+        this.valid = false;
+        this.errors.level = "Nível de ensino obrigatório!";
+      }
+
+      if (!this.forms.grade) {
+        this.valid = false;
+        this.errors.grade = "Série da escola obrigatória!";
+      }
+
+      if (!this.forms.day) {
+        this.valid = false;
+        this.errors.day = "Turno da escola obrigatório!";
+      }
+
+      if (!this.forms.school_id) {
+        this.valid = false;
+        this.errors.school = "Escola obrigatória!";
+      }
+
+      if (this.valid) {
+        axios.post('api/register-class', this.forms).then(function (response) {
+          location.href = "/turmas";
+        });
+      }
+    }
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('api/schools').then(function (response) {
+      _this.schools = response.data.schools;
+    });
+  },
   components: {
-    Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Link
+    Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Link,
+    Layout: _Layouts_App_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   }
 });
 
@@ -19235,9 +19329,73 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  layout: _Layouts_App_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+  props: {
+    classes: String | Array | Object,
+    students: String | Array | Object
+  },
+  data: function data() {
+    return {
+      forms: {
+        year: this.classes.year,
+        level: this.classes.level,
+        grade: this.classes.grade,
+        day: this.classes.day,
+        school_id: this.classes.school_id,
+        id: this.classes.id
+      },
+      schools: {},
+      errors: {},
+      valid: null,
+      link: "/editar-aluno/"
+    };
+  },
+  methods: {
+    formUpdateClass: function formUpdateClass() {
+      this.errors = {};
+      this.valid = true;
+
+      if (!this.forms.year) {
+        this.valid = false;
+        this.errors.year = "Ano da turma obrigatório!";
+      }
+
+      if (!this.forms.level) {
+        this.valid = false;
+        this.errors.level = "Nível de ensino obrigatório!";
+      }
+
+      if (!this.forms.grade) {
+        this.valid = false;
+        this.errors.grade = "Série da escola obrigatória!";
+      }
+
+      if (!this.forms.day) {
+        this.valid = false;
+        this.errors.day = "Turno da escola obrigatório!";
+      }
+
+      if (!this.forms.school_id) {
+        this.valid = false;
+        this.errors.school = "Escola obrigatória!";
+      }
+
+      if (this.valid) {
+        axios.put('/api/update-class', this.forms).then(function (response) {
+          location.href = "/turmas";
+        });
+      }
+    }
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/api/schools').then(function (response) {
+      _this.schools = response.data.schools;
+    });
+  },
   components: {
-    Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Link
+    Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Link,
+    Layout: _Layouts_App_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   }
 });
 
@@ -19283,9 +19441,51 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  layout: _Layouts_App_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+  data: function data() {
+    return {
+      forms: {
+        search: null
+      },
+      valid: null,
+      schools: {},
+      link: "/editar-escola/"
+    };
+  },
+  methods: {
+    formSearchSchool: function formSearchSchool() {
+      var _this = this;
+
+      this.valid = true;
+
+      if (!this.forms.search) {
+        return axios.get('api/schools').then(function (response) {
+          _this.schools = response.data.schools;
+        });
+      }
+
+      if (this.valid) {
+        axios.post('/api/search-schools', this.forms).then(function (response) {
+          _this.schools = response.data.schools;
+        });
+      }
+    },
+    formDeleteSchool: function formDeleteSchool(value) {
+      axios["delete"]('api/delete-school/' + value).then(function (response) {
+        location.href = "/escolas";
+      });
+    }
+  },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    axios.get('api/schools').then(function (response) {
+      _this2.schools = response.data.schools;
+      console.log(response);
+    });
+  },
   components: {
-    Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Link
+    Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Link,
+    Layout: _Layouts_App_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   }
 });
 
@@ -19307,9 +19507,41 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  layout: _Layouts_App_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+  data: function data() {
+    return {
+      forms: {
+        name: null,
+        street: null
+      },
+      errors: {},
+      valid: null
+    };
+  },
+  methods: {
+    formRegisterSchool: function formRegisterSchool() {
+      this.errors = {};
+      this.valid = true;
+
+      if (!this.forms.name) {
+        this.valid = false;
+        this.errors.name = "Nome da escola obrigatório!";
+      }
+
+      if (!this.forms.street) {
+        this.valid = false;
+        this.errors.street = "Endereço da escola obrigatório!";
+      }
+
+      if (this.valid) {
+        axios.post('api/register-school', this.forms).then(function (response) {
+          location.href = "/escolas";
+        });
+      }
+    }
+  },
   components: {
-    Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Link
+    Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Link,
+    Layout: _Layouts_App_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   }
 });
 
@@ -19331,9 +19563,47 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  layout: _Layouts_App_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+  props: {
+    school: Object | Array,
+    classes: Object | Array
+  },
+  data: function data() {
+    return {
+      forms: {
+        id: this.school.id,
+        name: this.school.name,
+        street: this.school.street
+      },
+      errors: {},
+      valid: null,
+      link: "/editar-turma/"
+    };
+  },
+  methods: {
+    formUpdateSchool: function formUpdateSchool() {
+      this.errors = {};
+      this.valid = true;
+
+      if (!this.forms.name) {
+        this.valid = false;
+        this.errors.name = "Nome da escola obrigatório!";
+      }
+
+      if (!this.forms.street) {
+        this.valid = false;
+        this.errors.street = "Endereço da escola obrigatório!";
+      }
+
+      if (this.valid) {
+        axios.put('/api/update-school', this.forms).then(function (response) {
+          location.href = "/escolas";
+        });
+      }
+    }
+  },
   components: {
-    Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Link
+    Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Link,
+    Layout: _Layouts_App_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   }
 });
 
@@ -19362,7 +19632,6 @@ __webpack_require__.r(__webpack_exports__);
       },
       students: {},
       link: "/editar-aluno/",
-      errors: {},
       valid: null,
       studentsSearch: {}
     };
@@ -19381,7 +19650,10 @@ __webpack_require__.r(__webpack_exports__);
       this.valid = true;
 
       if (!this.forms.search) {
-        this.valid = false, this.errors.search = "Preencha o campo para pesquisar.";
+        this.valid = false;
+        return axios.get('api/students').then(function (response) {
+          _this2.students = response.data.students;
+        });
       }
 
       if (this.valid) {
@@ -19389,6 +19661,11 @@ __webpack_require__.r(__webpack_exports__);
           _this2.students = response.data.students;
         });
       }
+    },
+    formDeleteStudent: function formDeleteStudent(value) {
+      axios["delete"]('api/delete-student/' + value).then(function (response) {
+        location.href = "/alunos";
+      });
     }
   },
   components: {
@@ -19424,32 +19701,54 @@ __webpack_require__.r(__webpack_exports__);
         birth: null,
         gender: null,
         school: null,
-        classes: [],
-        "class": null
+        classesA: [],
+        class_id: null
       },
       errors: {},
+      classesE: null,
+      schools: {},
       valid: null
     };
   },
   methods: {
-    addClass: function addClass() {
+    changeSchool: function changeSchool(value) {
       var _this = this;
 
-      this.errors = {};
+      axios.get("/api/classes/".concat(this.forms.id, "/").concat(this.forms.school_id)).then(function (response) {
+        _this.classesE = response.data.classE;
+        _this.forms.classesA = [];
+      });
+    },
+    addClass: function addClass() {
+      var _this2 = this;
 
-      if (!this.forms["class"]) {
+      this.errors = {};
+      this.valid = true;
+
+      if (!this.forms.class_id) {
+        this.valid = false;
         return this.errors["class"] = "Selecione uma turma.";
       }
 
-      if (this.forms.classes.find(function (element) {
-        return element === _this.forms["class"];
-      })) {
-        return this.errors["class"] = "Aluno já incluído na turma.";
-      }
+      this.forms.classesA.forEach(function (classA) {
+        if (classA == _this2.forms.class_id) {
+          _this2.valid = false;
+          return _this2.errors["class"] = "Aluno já incluído na turma.";
+        }
+      });
 
-      var ul = document.querySelector('#classesList');
-      ul.innerHTML += "<li>" + this.forms["class"] + "</li>";
-      this.forms.classes.push(this.forms["class"]);
+      if (this.valid) {
+        this.forms.classesA.push(this.forms.class_id);
+      }
+    },
+    removeClass: function removeClass(value) {
+      var removeClassA = this.forms.classesA.findIndex(function (classA) {
+        return classA.id === value;
+      });
+
+      if (removeClassA > -1) {
+        this.forms.classesA.splice(removeClassA, 1);
+      }
     },
     formRegisterStudent: function formRegisterStudent() {
       this.errors = {};
@@ -19470,12 +19769,29 @@ __webpack_require__.r(__webpack_exports__);
         this.errors.birth = "Formato incorreto!";
       }
 
+      if (this.forms.birth && this.forms.birth.length > 10) {
+        this.valid = false;
+        this.errors.birth = "Formato incorreto!";
+      }
+
+      if (this.forms.birth && this.forms.birth.length > 10) {
+        this.valid = false;
+        this.errors.birth = "Formato incorreto!";
+      }
+
       if (this.valid) {
         axios.post('api/register-student', this.forms).then(function (response) {
           location.href = "/alunos";
         });
       }
     }
+  },
+  mounted: function mounted() {
+    var _this3 = this;
+
+    axios.get('/api/schools').then(function (response) {
+      _this3.schools = response.data.schools;
+    });
   },
   components: {
     Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Link,
@@ -19502,7 +19818,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    student: Object | Array
+    student: Object | Array,
+    classE: Object | Array,
+    classA: Object | Array
   },
   data: function data() {
     return {
@@ -19513,14 +19831,56 @@ __webpack_require__.r(__webpack_exports__);
         phone: this.student.phone,
         birth: this.student.birth,
         gender: this.student.gender,
-        school: this.student.school,
-        "class": this.student["class"]
+        school_id: this.student.school_id,
+        class_id: null,
+        classesA: this.classA
       },
       errors: {},
+      schools: {},
+      classesE: this.classE,
       valid: null
     };
   },
   methods: {
+    changeSchool: function changeSchool(value) {
+      var _this = this;
+
+      axios.get("/api/classes/".concat(this.forms.id, "/").concat(this.forms.school_id)).then(function (response) {
+        _this.classesE = response.data.classE;
+        _this.forms.classesA = [];
+      });
+    },
+    addClass: function addClass() {
+      var _this2 = this;
+
+      this.errors = {};
+      this.valid = true;
+
+      if (!this.forms.class_id) {
+        this.valid = false;
+        return this.errors["class"] = "Selecione uma turma.";
+      }
+
+      this.forms.classesA.forEach(function (classA) {
+        if (classA == _this2.forms.class_id) {
+          _this2.valid = false;
+          return _this2.errors["class"] = "Aluno já incluído na turma.";
+        }
+      });
+
+      if (this.valid) {
+        this.forms.classesA.push(this.forms.class_id);
+      }
+    },
+    removeClass: function removeClass(value) {
+      var removeClassA = this.forms.classesA.findIndex(function (classA) {
+        return classA.id === value;
+      });
+
+      if (removeClassA > -1) {
+        this.forms.classesA.splice(removeClassA, 1);
+      }
+    },
     formUpdateStudent: function formUpdateStudent() {
       this.errors = {};
       this.valid = true;
@@ -19541,11 +19901,18 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       if (this.valid) {
-        axios.post('/api/update-student', this.forms).then(function (response) {
+        axios.put('/api/update-student', this.forms).then(function (response) {
           location.href = "/alunos";
         });
       }
     }
+  },
+  mounted: function mounted() {
+    var _this3 = this;
+
+    axios.get('/api/schools').then(function (response) {
+      _this3.schools = response.data.schools;
+    });
   },
   components: {
     Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Link,
@@ -19649,73 +20016,41 @@ var _hoisted_1 = {
 var _hoisted_2 = {
   "class": "search-students-container"
 };
-var _hoisted_3 = {
-  action: ""
-};
 
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "text",
-  "class": "input-search-students",
-  placeholder: "Pesquise a turma pelo ano..."
-}, null, -1
-/* HOISTED */
-);
-
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "submit",
   "class": "button-search-students"
 }, "Pesquisar", -1
 /* HOISTED */
 );
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Registrar nova turma");
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Registrar nova turma");
 
-var _hoisted_7 = {
+var _hoisted_5 = {
   "class": "table-students-container"
 };
-var _hoisted_8 = {
+var _hoisted_6 = {
   "class": "table-students"
 };
 
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "ID"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Ano da turma"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Nível de ensino"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Série"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Turno"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Alunos"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Ações")])], -1
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "ID"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Ano da turma"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Nível de ensino"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Série"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Turno"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Escola"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Alunos"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Ações")])], -1
 /* HOISTED */
 );
 
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "1", -1
-/* HOISTED */
-);
-
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "2019", -1
-/* HOISTED */
-);
-
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "médio", -1
-/* HOISTED */
-);
-
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "3", -1
-/* HOISTED */
-);
-
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "noturno", -1
-/* HOISTED */
-);
-
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "22", -1
-/* HOISTED */
-);
-
-var _hoisted_16 = {
+var _hoisted_8 = {
   action: ""
 };
+var _hoisted_9 = {
+  "class": "form-action-students"
+};
 
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   "class": "button-remove-student"
 }, "Excluir", -1
 /* HOISTED */
 );
 
-var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Editar");
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Editar");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Link");
@@ -19724,26 +20059,65 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_layout, null, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_3, [_hoisted_4, _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
-        href: "/registrar-escola",
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+        onSubmit: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+          return $options.searchClasses && $options.searchClasses.apply($options, arguments);
+        }, ["prevent"]))
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        "class": "input-search-students",
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+          return $data.forms.search = $event;
+        }),
+        name: "search",
+        placeholder: "Pesquise a turma pelo ano..."
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.forms.search]]), _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
+        href: "/registrar-turma",
         "class": "create-link-students"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_6];
+          return [_hoisted_4];
         }),
         _: 1
         /* STABLE */
 
-      })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_10, _hoisted_11, _hoisted_12, _hoisted_13, _hoisted_14, _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
-        href: "/editar-turma"
-      }, {
-        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_18];
-        }),
-        _: 1
-        /* STABLE */
+      })], 32
+      /* HYDRATE_EVENTS */
+      )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.classes, function (clasS) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
+          key: clasS.id
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(clasS.id), 1
+        /* TEXT */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(clasS.year), 1
+        /* TEXT */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(clasS.level), 1
+        /* TEXT */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(clasS.grade), 1
+        /* TEXT */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(clasS.day), 1
+        /* TEXT */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(clasS.school.name), 1
+        /* TEXT */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(clasS.students.length), 1
+        /* TEXT */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
+          href: $data.link + clasS.id,
+          "class": "link-edit-student"
+        }, {
+          "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+            return [_hoisted_11];
+          }),
+          _: 2
+          /* DYNAMIC */
 
-      })])])])])])])])];
+        }, 1032
+        /* PROPS, DYNAMIC_SLOTS */
+        , ["href"])])])])]);
+      }), 128
+      /* KEYED_FRAGMENT */
+      ))])])])])];
     }),
     _: 1
     /* STABLE */
@@ -19776,115 +20150,122 @@ var _hoisted_3 = {
   "class": "form-edit-student-container"
 };
 var _hoisted_4 = {
-  action: "",
-  "class": "form-edit-student"
+  "class": "input-container-edit-student"
 };
 
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "input-container-edit-student"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "year"
-}, "Ano: "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "text",
-  name: "year"
-})], -1
+}, "Ano: ", -1
 /* HOISTED */
 );
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_6 = {
+  key: 0,
+  "class": "message-error"
+};
+var _hoisted_7 = {
   "class": "input-container-edit-student level-container"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+};
+
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "level"
-}, "Nível de ensino: "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-  "class": "p-level-class"
-}, "Fundamental"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "radio",
-  name: "level"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-  "class": "p-level-class"
-}, "Médio"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "radio",
-  name: "level"
-})], -1
+}, "Nível de ensino: ", -1
 /* HOISTED */
 );
 
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "input-container-edit-student"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "grade"
-}, "Série: "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "text",
-  name: "grade"
-})], -1
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "p-level-class"
+}, "Fundamental", -1
 /* HOISTED */
 );
 
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "input-container-edit-student level-container"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "level"
-}, "Turno: "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
   "class": "p-level-class"
-}, "Matutino"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "radio",
-  name: "level"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-  "class": "p-level-class"
-}, "Vespertino"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "radio",
-  name: "level"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-  "class": "p-level-class"
-}, "Noturno"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "radio",
-  name: "level"
-})], -1
-/* HOISTED */
-);
-
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "input-container-edit-student"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "gender"
-}, "Escola: "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
-  name: "",
-  id: "",
-  "class": "select-school-student"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "",
-  selected: "",
-  disabled: ""
-}, "Selecione a escola do aluno"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: ""
-}, "Etec Monsenhor Antonio magliano")])], -1
-/* HOISTED */
-);
-
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "ALUNOS: ", -1
+}, "Médio", -1
 /* HOISTED */
 );
 
 var _hoisted_11 = {
-  action: "",
-  "class": "form-remove-student"
+  key: 1,
+  "class": "message-error"
 };
 var _hoisted_12 = {
-  "class": "box-students-class"
-};
-var _hoisted_13 = {
-  "class": "align-students-class"
+  "class": "input-container-edit-student"
 };
 
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Alan dos Santos Bertolucci");
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "grade"
+}, "Série: ", -1
+/* HOISTED */
+);
 
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_14 = {
+  key: 2,
+  "class": "message-error"
+};
+var _hoisted_15 = {
+  "class": "input-container-edit-student level-container"
+};
+
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "level"
+}, "Turno: ", -1
+/* HOISTED */
+);
+
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "p-level-class"
+}, "Matutino", -1
+/* HOISTED */
+);
+
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "p-level-class"
+}, "Vespertino", -1
+/* HOISTED */
+);
+
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "p-level-class"
+}, "Noturno", -1
+/* HOISTED */
+);
+
+var _hoisted_20 = {
+  key: 3,
+  "class": "message-error"
+};
+var _hoisted_21 = {
+  "class": "input-container-edit-student"
+};
+
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "gender"
+}, "Escola: ", -1
+/* HOISTED */
+);
+
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "",
+  selected: "",
+  disabled: ""
+}, "Selecione a escola do aluno", -1
+/* HOISTED */
+);
+
+var _hoisted_24 = ["value"];
+var _hoisted_25 = {
+  key: 4,
+  "class": "message-error"
+};
+
+var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   "class": "save-informations-edit-student"
 }, "Salvar alterações", -1
 /* HOISTED */
 );
 
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Voltar");
+var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Voltar");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Link");
@@ -19893,27 +20274,115 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_layout, null, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_4, [_hoisted_5, _hoisted_6, _hoisted_7, _hoisted_8, _hoisted_9, _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
-        href: "/editar-aluno",
-        "class": "student-link-class"
-      }, {
-        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_14];
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+        onSubmit: _cache[8] || (_cache[8] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+          return $options.formRegisterClass && $options.formRegisterClass.apply($options, arguments);
+        }, ["prevent"])),
+        "class": "form-edit-student"
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+          return $data.forms.year = $event;
         }),
-        _: 1
-        /* STABLE */
-
-      })])])]), _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
+        name: "year",
+        placeholder: "Ex:2020"
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.forms.year]])]), $data.errors.year ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.year), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "radio",
+        "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+          return $data.forms.level = $event;
+        }),
+        name: "level",
+        value: "elementary"
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $data.forms.level]]), _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "radio",
+        "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+          return $data.forms.level = $event;
+        }),
+        name: "level",
+        value: "high"
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $data.forms.level]])]), $data.errors.level ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.level), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+          return $data.forms.grade = $event;
+        }),
+        name: "grade",
+        placeholder: "Ex: 3"
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.forms.grade]])]), $data.errors.grade ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.grade), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "radio",
+        "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+          return $data.forms.day = $event;
+        }),
+        name: "day",
+        value: "morning"
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $data.forms.day]]), _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "radio",
+        "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+          return $data.forms.day = $event;
+        }),
+        name: "day",
+        value: "afternoon"
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $data.forms.day]]), _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "radio",
+        "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+          return $data.forms.day = $event;
+        }),
+        name: "day",
+        value: "night"
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $data.forms.day]])]), $data.errors.day ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.day), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+        name: "",
+        "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
+          return $data.forms.school_id = $event;
+        }),
+        id: "",
+        "class": "select-school-student"
+      }, [_hoisted_23, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.schools, function (school) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+          key: school.id,
+          value: school.id
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(school.name), 9
+        /* TEXT, PROPS */
+        , _hoisted_24);
+      }), 128
+      /* KEYED_FRAGMENT */
+      ))], 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.forms.school_id]])]), $data.errors.school ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.school), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
         href: "/turmas",
         "class": "back-to-students"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_16];
+          return [_hoisted_27];
         }),
         _: 1
         /* STABLE */
 
-      })])])])])];
+      })], 32
+      /* HYDRATE_EVENTS */
+      )])])])];
     }),
     _: 1
     /* STABLE */
@@ -19946,115 +20415,129 @@ var _hoisted_3 = {
   "class": "form-edit-student-container"
 };
 var _hoisted_4 = {
-  action: "",
-  "class": "form-edit-student"
+  "class": "input-container-edit-student"
 };
 
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "input-container-edit-student"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "year"
-}, "Ano: "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "text",
-  name: "year"
-})], -1
+}, "Ano: ", -1
 /* HOISTED */
 );
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_6 = {
+  key: 0,
+  "class": "message-error"
+};
+var _hoisted_7 = {
   "class": "input-container-edit-student level-container"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+};
+
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "level"
-}, "Nível de ensino: "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-  "class": "p-level-class"
-}, "Fundamental"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "radio",
-  name: "level"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-  "class": "p-level-class"
-}, "Médio"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "radio",
-  name: "level"
-})], -1
+}, "Nível de ensino: ", -1
 /* HOISTED */
 );
 
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "input-container-edit-student"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "grade"
-}, "Série: "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "text",
-  name: "grade"
-})], -1
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "p-level-class"
+}, "Fundamental", -1
 /* HOISTED */
 );
 
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "input-container-edit-student level-container"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "level"
-}, "Turno: "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
   "class": "p-level-class"
-}, "Matutino"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "radio",
-  name: "level"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-  "class": "p-level-class"
-}, "Vespertino"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "radio",
-  name: "level"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-  "class": "p-level-class"
-}, "Noturno"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "radio",
-  name: "level"
-})], -1
-/* HOISTED */
-);
-
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "input-container-edit-student"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "gender"
-}, "Escola: "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
-  name: "",
-  id: "",
-  "class": "select-school-student"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "",
-  selected: "",
-  disabled: ""
-}, "Selecione a escola do aluno"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: ""
-}, "Etec Monsenhor Antonio magliano")])], -1
-/* HOISTED */
-);
-
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "ALUNOS: ", -1
+}, "Médio", -1
 /* HOISTED */
 );
 
 var _hoisted_11 = {
-  action: "",
-  "class": "form-remove-student"
+  key: 1,
+  "class": "message-error"
 };
 var _hoisted_12 = {
+  "class": "input-container-edit-student"
+};
+
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "grade"
+}, "Série: ", -1
+/* HOISTED */
+);
+
+var _hoisted_14 = {
+  key: 2,
+  "class": "message-error"
+};
+var _hoisted_15 = {
+  "class": "input-container-edit-student level-container"
+};
+
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "level"
+}, "Turno: ", -1
+/* HOISTED */
+);
+
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "p-level-class"
+}, "Matutino", -1
+/* HOISTED */
+);
+
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "p-level-class"
+}, "Vespertino", -1
+/* HOISTED */
+);
+
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "p-level-class"
+}, "Noturno", -1
+/* HOISTED */
+);
+
+var _hoisted_20 = {
+  key: 3,
+  "class": "message-error"
+};
+var _hoisted_21 = {
+  "class": "input-container-edit-student"
+};
+
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "gender"
+}, "Escola: ", -1
+/* HOISTED */
+);
+
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "",
+  selected: "",
+  disabled: ""
+}, "Selecione a escola do aluno", -1
+/* HOISTED */
+);
+
+var _hoisted_24 = ["value"];
+
+var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "ALUNOS: ", -1
+/* HOISTED */
+);
+
+var _hoisted_26 = {
   "class": "box-students-class"
 };
-var _hoisted_13 = {
-  "class": "align-students-class"
+var _hoisted_27 = {
+  key: 0
 };
 
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Alan dos Santos Bertolucci");
-
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   "class": "save-informations-edit-student"
 }, "Salvar alterações", -1
 /* HOISTED */
 );
 
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Voltar");
+var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Voltar");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Link");
@@ -20063,27 +20546,134 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_layout, null, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_4, [_hoisted_5, _hoisted_6, _hoisted_7, _hoisted_8, _hoisted_9, _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
-        href: "/editar-aluno",
-        "class": "student-link-class"
-      }, {
-        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_14];
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+        onSubmit: _cache[8] || (_cache[8] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+          return $options.formUpdateClass && $options.formUpdateClass.apply($options, arguments);
+        }, ["prevent"])),
+        "class": "form-edit-student"
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+          return $data.forms.year = $event;
         }),
-        _: 1
-        /* STABLE */
+        name: "year",
+        placeholder: "Ex:2020"
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.forms.year]])]), $data.errors.year ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.year), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "radio",
+        "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+          return $data.forms.level = $event;
+        }),
+        name: "level",
+        value: "elementary"
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $data.forms.level]]), _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "radio",
+        "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+          return $data.forms.level = $event;
+        }),
+        name: "level",
+        value: "high"
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $data.forms.level]])]), $data.errors.level ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.level), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+          return $data.forms.grade = $event;
+        }),
+        name: "grade",
+        placeholder: "Ex: 3"
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.forms.grade]])]), $data.errors.grade ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.grade), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "radio",
+        "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+          return $data.forms.day = $event;
+        }),
+        name: "day",
+        value: "morning"
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $data.forms.day]]), _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "radio",
+        "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+          return $data.forms.day = $event;
+        }),
+        name: "day",
+        value: "afternoon"
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $data.forms.day]]), _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "radio",
+        "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+          return $data.forms.day = $event;
+        }),
+        name: "day",
+        value: "night"
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $data.forms.day]])]), $data.errors.day ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.day), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+        name: "",
+        "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
+          return $data.forms.school_id = $event;
+        }),
+        id: "",
+        "class": "select-school-student"
+      }, [_hoisted_23, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.schools, function (school) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+          key: school.id,
+          value: school.id
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(school.name), 9
+        /* TEXT, PROPS */
+        , _hoisted_24);
+      }), 128
+      /* KEYED_FRAGMENT */
+      ))], 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.forms.school_id]])]), _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [$props.students.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("h4", _hoisted_27, "Nenhum aluno encontrado.")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.students, function (student) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+          "class": "align-students-class",
+          key: student.id
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
+          href: $data.link + student.name.split(' ').join('-').toLowerCase() + '/' + student.id,
+          "class": "link-edit-student"
+        }, {
+          "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+            return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(student.name), 1
+            /* TEXT */
+            )];
+          }),
+          _: 2
+          /* DYNAMIC */
 
-      })])])]), _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
+        }, 1032
+        /* PROPS, DYNAMIC_SLOTS */
+        , ["href"])]);
+      }), 128
+      /* KEYED_FRAGMENT */
+      ))]), _hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
         href: "/turmas",
         "class": "back-to-students"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_16];
+          return [_hoisted_29];
         }),
         _: 1
         /* STABLE */
 
-      })])])])])];
+      })], 32
+      /* HYDRATE_EVENTS */
+      )])])])];
     }),
     _: 1
     /* STABLE */
@@ -20227,69 +20817,37 @@ var _hoisted_1 = {
 var _hoisted_2 = {
   "class": "search-students-container"
 };
-var _hoisted_3 = {
-  action: ""
-};
 
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "text",
-  "class": "input-search-students",
-  placeholder: "Digite o nome da escola..."
-}, null, -1
-/* HOISTED */
-);
-
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "submit",
   "class": "button-search-students"
 }, "Pesquisar", -1
 /* HOISTED */
 );
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Registrar nova escola");
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Registrar nova escola");
 
-var _hoisted_7 = {
+var _hoisted_5 = {
   "class": "table-students-container"
 };
-var _hoisted_8 = {
+var _hoisted_6 = {
   "class": "table-students"
 };
 
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "ID"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Nome da escola"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Endereço"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Turmas"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Alunos"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Ações")])], -1
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "ID"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Nome da escola"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Endereço"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Turmas"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Alunos"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Ações")])], -1
 /* HOISTED */
 );
 
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "1", -1
-/* HOISTED */
-);
+var _hoisted_8 = ["onSubmit"];
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "Etec monsenhor antonio ba", -1
-/* HOISTED */
-);
-
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "Pinchas ditisndias 32", -1
-/* HOISTED */
-);
-
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "123", -1
-/* HOISTED */
-);
-
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "121.232", -1
-/* HOISTED */
-);
-
-var _hoisted_15 = {
-  action: ""
-};
-
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  type: "submit",
   "class": "button-remove-student"
 }, "Excluir", -1
 /* HOISTED */
 );
 
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Editar");
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Editar");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Link");
@@ -20298,26 +20856,66 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_layout, null, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_3, [_hoisted_4, _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+        onSubmit: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+          return $options.formSearchSchool && $options.formSearchSchool.apply($options, arguments);
+        }, ["prevent"]))
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+          return $data.forms.search = $event;
+        }),
+        "class": "input-search-students",
+        placeholder: "Digite o nome da escola..."
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.forms.search]]), _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
         href: "/registrar-escola",
         "class": "create-link-students"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_6];
+          return [_hoisted_4];
         }),
         _: 1
         /* STABLE */
 
-      })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_10, _hoisted_11, _hoisted_12, _hoisted_13, _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
-        href: "/editar-escola"
-      }, {
-        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_17];
-        }),
-        _: 1
-        /* STABLE */
+      })], 32
+      /* HYDRATE_EVENTS */
+      )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.schools, function (school) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
+          key: school.id
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(school.id), 1
+        /* TEXT */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(school.name), 1
+        /* TEXT */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(school.street), 1
+        /* TEXT */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(school.classes.length), 1
+        /* TEXT */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(school.students.length), 1
+        /* TEXT */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+          onSubmit: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+            return $options.formDeleteSchool(school.id);
+          }, ["prevent"])
+        }, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
+          href: $data.link + school.name.split(' ').join('-').toLowerCase() + '/' + school.id,
+          "class": "link-edit-student"
+        }, {
+          "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+            return [_hoisted_10];
+          }),
+          _: 2
+          /* DYNAMIC */
 
-      })])])])])])])])];
+        }, 1032
+        /* PROPS, DYNAMIC_SLOTS */
+        , ["href"])], 40
+        /* PROPS, HYDRATE_EVENTS */
+        , _hoisted_8)])]);
+      }), 128
+      /* KEYED_FRAGMENT */
+      ))])])])])];
     }),
     _: 1
     /* STABLE */
@@ -20350,56 +20948,42 @@ var _hoisted_3 = {
   "class": "form-edit-student-container"
 };
 var _hoisted_4 = {
-  action: "",
-  "class": "form-edit-student"
+  "class": "input-container-edit-student"
 };
 
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "input-container-edit-student"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "name"
-}, "Nome: "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "text",
-  name: "name"
-})], -1
+}, "Nome: ", -1
 /* HOISTED */
 );
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_6 = {
+  key: 0,
+  "class": "message-error"
+};
+var _hoisted_7 = {
   "class": "input-container-edit-student"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+};
+
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "street"
-}, "Endereço: "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "text",
-  name: "street"
-})], -1
+}, "Endereço: ", -1
 /* HOISTED */
 );
 
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "TURMAS: ", -1
-/* HOISTED */
-);
-
-var _hoisted_8 = {
-  action: "",
-  "class": "form-remove-student"
-};
 var _hoisted_9 = {
-  "class": "box-students-class"
-};
-var _hoisted_10 = {
-  "class": "align-students-class"
+  key: 0,
+  "class": "message-error"
 };
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("3 ano - médio - noturno - 2020");
-
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  type: "submit",
   "class": "save-informations-edit-student"
 }, "Salvar alterações", -1
 /* HOISTED */
 );
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Voltar");
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Voltar");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Link");
@@ -20408,9 +20992,34 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_layout, null, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_4, [_hoisted_5, _hoisted_6, _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
-        href: "/editar-turma",
-        "class": "student-link-class"
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+        onSubmit: _cache[2] || (_cache[2] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+          return $options.formRegisterSchool && $options.formRegisterSchool.apply($options, arguments);
+        }, ["prevent"])),
+        "class": "form-edit-student"
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+          return $data.forms.name = $event;
+        }),
+        name: "name"
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.forms.name]]), $data.errors.name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.name), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+          return $data.forms.street = $event;
+        }),
+        name: "street"
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.forms.street]]), $data.errors.street ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.street), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
+        href: "/escolas",
+        "class": "back-to-students"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [_hoisted_11];
@@ -20418,17 +21027,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         _: 1
         /* STABLE */
 
-      })])])]), _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
-        href: "/escolas",
-        "class": "back-to-students"
-      }, {
-        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_13];
-        }),
-        _: 1
-        /* STABLE */
-
-      })])])])])];
+      })], 32
+      /* HYDRATE_EVENTS */
+      )])])])];
     }),
     _: 1
     /* STABLE */
@@ -20461,56 +21062,52 @@ var _hoisted_3 = {
   "class": "form-edit-student-container"
 };
 var _hoisted_4 = {
-  action: "",
-  "class": "form-edit-student"
+  "class": "input-container-edit-student"
 };
 
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "input-container-edit-student"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "name"
-}, "Nome: "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "text",
-  name: "name"
-})], -1
+}, "Nome: ", -1
 /* HOISTED */
 );
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "input-container-edit-student"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "street"
-}, "Endereço: "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "text",
-  name: "street"
-})], -1
-/* HOISTED */
-);
-
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "TURMAS: ", -1
-/* HOISTED */
-);
-
-var _hoisted_8 = {
-  action: "",
-  "class": "form-remove-student"
+var _hoisted_6 = {
+  key: 0,
+  "class": "message-error"
 };
+var _hoisted_7 = {
+  "class": "input-container-edit-student"
+};
+
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "street"
+}, "Endereço: ", -1
+/* HOISTED */
+);
+
 var _hoisted_9 = {
+  key: 0,
+  "class": "message-error"
+};
+
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "TURMAS: ", -1
+/* HOISTED */
+);
+
+var _hoisted_11 = {
   "class": "box-students-class"
 };
-var _hoisted_10 = {
-  "class": "align-students-class"
+var _hoisted_12 = {
+  key: 0
 };
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("3 ano - médio - noturno - 2020");
-
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   "class": "save-informations-edit-student"
 }, "Salvar alterações", -1
 /* HOISTED */
 );
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Voltar");
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Voltar");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Link");
@@ -20519,27 +21116,65 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_layout, null, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_4, [_hoisted_5, _hoisted_6, _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
-        href: "/editar-turma",
-        "class": "student-link-class"
-      }, {
-        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_11];
-        }),
-        _: 1
-        /* STABLE */
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+        onSubmit: _cache[2] || (_cache[2] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+          return $options.formUpdateSchool && $options.formUpdateSchool.apply($options, arguments);
+        }, ["prevent"])),
+        "class": "form-edit-student"
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        name: "name",
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+          return $data.forms.name = $event;
+        })
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.forms.name]]), $data.errors.name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.name), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        name: "street",
+        "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+          return $data.forms.street = $event;
+        })
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.forms.street]]), $data.errors.street ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.street), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [$props.classes.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("h4", _hoisted_12, "Nenhuma turma encontrada.")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.classes, function (clasS) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+          "class": "align-students-class",
+          key: clasS.id
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
+          href: $data.link + clasS.id,
+          "class": "link-edit-student"
+        }, {
+          "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+            return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(clasS.grade) + "° ano - " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(clasS.level) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(clasS.day) + " - " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(clasS.year), 1
+            /* TEXT */
+            )];
+          }),
+          _: 2
+          /* DYNAMIC */
 
-      })])])]), _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
+        }, 1032
+        /* PROPS, DYNAMIC_SLOTS */
+        , ["href"])]);
+      }), 128
+      /* KEYED_FRAGMENT */
+      ))]), _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
         href: "/escolas",
         "class": "back-to-students"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_13];
+          return [_hoisted_14];
         }),
         _: 1
         /* STABLE */
 
-      })])])])])];
+      })], 32
+      /* HYDRATE_EVENTS */
+      )])])])];
     }),
     _: 1
     /* STABLE */
@@ -20579,34 +21214,29 @@ var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Registrar novo aluno");
 
 var _hoisted_5 = {
-  key: 0,
-  "class": "message-error"
-};
-var _hoisted_6 = {
   "class": "table-students-container"
 };
-var _hoisted_7 = {
+var _hoisted_6 = {
   "class": "table-students"
 };
 
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "ID"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Nome completo"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "E-mail"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Nascimento"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Telefone"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Turmas"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Escola"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Ações")])], -1
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "ID"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Nome completo"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "E-mail"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Nascimento"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Telefone"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Escola"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Turmas"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Ações")])], -1
 /* HOISTED */
 );
 
+var _hoisted_8 = ["onSubmit"];
 var _hoisted_9 = {
-  action: ""
-};
-var _hoisted_10 = {
   "class": "form-action-students"
 };
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  type: "submit",
   "class": "button-remove-student"
 }, "Excluir", -1
 /* HOISTED */
 );
 
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Editar");
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Editar");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Link");
@@ -20640,9 +21270,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
       })], 32
       /* HYDRATE_EVENTS */
-      ), $data.errors.search ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.search), 1
-      /* TEXT */
-      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.students, function (student) {
+      )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.students, function (student) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
           key: student.id
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(student.id), 1
@@ -20655,23 +21283,29 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* TEXT */
         ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(student.phone), 1
         /* TEXT */
-        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(student.id), 1
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(student.school.name), 1
         /* TEXT */
         ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(student.id), 1
         /* TEXT */
-        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+          onSubmit: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+            return $options.formDeleteStudent(student.id);
+          }, ["prevent"])
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
           href: $data.link + student.name.split(' ').join('-').toLowerCase() + '/' + student.id,
           "class": "link-edit-student"
         }, {
           "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-            return [_hoisted_12];
+            return [_hoisted_11];
           }),
           _: 2
           /* DYNAMIC */
 
         }, 1032
         /* PROPS, DYNAMIC_SLOTS */
-        , ["href"])])])])]);
+        , ["href"])])], 40
+        /* PROPS, HYDRATE_EVENTS */
+        , _hoisted_8)])]);
       }), 128
       /* KEYED_FRAGMENT */
       ))])])])])];
@@ -20794,7 +21428,7 @@ var _hoisted_21 = {
 };
 
 var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "school"
+  "for": "gender"
 }, "Escola: ", -1
 /* HOISTED */
 );
@@ -20803,90 +21437,58 @@ var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   value: "",
   selected: "",
   disabled: ""
-}, " Selecione a escola do aluno ", -1
+}, "Selecione a escola do aluno", -1
 /* HOISTED */
 );
 
-var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "Etec Monsenhor Antonio magliano"
-}, " Etec Monsenhor Antonio magliano ", -1
-/* HOISTED */
-);
-
-var _hoisted_25 = [_hoisted_23, _hoisted_24];
-var _hoisted_26 = {
+var _hoisted_24 = ["value"];
+var _hoisted_25 = {
   "class": "input-container-edit-student"
 };
 
-var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "gender"
-}, "Turma: ", -1
+}, "Tumas: ", -1
 /* HOISTED */
 );
 
-var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   value: "",
   selected: "",
   disabled: ""
-}, " Selecione a turma do aluno ", -1
+}, "Selecione as turmas do aluno", -1
 /* HOISTED */
 );
 
-var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "3° ano do médio 2020"
-}, "3° ano do médio 2020", -1
-/* HOISTED */
-);
-
-var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "4° ano do médio 2020"
-}, "4° ano do médio 2020", -1
-/* HOISTED */
-);
-
-var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "1° ano do médio 2020"
-}, "1° ano do médio 2020", -1
-/* HOISTED */
-);
-
-var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "5° ano do médio 2020"
-}, "5° ano do médio 2020", -1
-/* HOISTED */
-);
-
-var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "6° ano do médio 2020"
-}, "6° ano do médio 2020", -1
-/* HOISTED */
-);
-
-var _hoisted_34 = [_hoisted_28, _hoisted_29, _hoisted_30, _hoisted_31, _hoisted_32, _hoisted_33];
-var _hoisted_35 = {
+var _hoisted_28 = ["value"];
+var _hoisted_29 = {
   key: 0,
   "class": "message-error"
 };
 
-var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Adicionar Turma", -1
+var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Adicionar Turma", -1
 /* HOISTED */
 );
 
-var _hoisted_37 = [_hoisted_36];
+var _hoisted_31 = [_hoisted_30];
+var _hoisted_32 = {
+  key: 0,
+  "class": "li-class-list"
+};
+var _hoisted_33 = ["onClick"];
+var _hoisted_34 = {
+  key: 1,
+  "class": "li-class-list"
+};
+var _hoisted_35 = ["onClick"];
 
-var _hoisted_38 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", {
-  id: "classesList"
-}, null, -1
-/* HOISTED */
-);
-
-var _hoisted_39 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   "class": "save-informations-edit-student"
 }, "Salvar alterações", -1
 /* HOISTED */
 );
 
-var _hoisted_40 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Voltar");
+var _hoisted_37 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Voltar");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Link");
@@ -20896,7 +21498,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_layout, null, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-        onSubmit: _cache[8] || (_cache[8] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+        onSubmit: _cache[9] || (_cache[9] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
           return $options.formRegisterStudent && $options.formRegisterStudent.apply($options, arguments);
         }, ["prevent"])),
         "class": "form-edit-student"
@@ -20949,36 +21551,80 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, _hoisted_20, 512
       /* NEED_PATCH */
       ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.forms.gender]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
-        name: "school",
+        name: "",
         "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
-          return $data.forms.school = $event;
+          return $data.forms.school_id = $event;
+        }),
+        onChange: _cache[6] || (_cache[6] = function ($event) {
+          return $options.changeSchool($data.forms.school_id);
         }),
         id: "",
         "class": "select-school-student"
-      }, _hoisted_25, 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.forms.school]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [_hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
-        name: "gender",
-        id: "",
-        "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
-          return $data.forms["class"] = $event;
+      }, [_hoisted_23, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.schools, function (school) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+          key: school.id,
+          value: school.id
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(school.name), 9
+        /* TEXT, PROPS */
+        , _hoisted_24);
+      }), 128
+      /* KEYED_FRAGMENT */
+      ))], 544
+      /* HYDRATE_EVENTS, NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.forms.school_id]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+        name: "",
+        "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
+          return $data.forms.class_id = $event;
         }),
+        id: "",
         "class": "select-school-student"
-      }, _hoisted_34, 512
+      }, [_hoisted_27, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.classesE, function (classE) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+          key: classE.id,
+          value: classE
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(classE.grade) + "° " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(classE.level) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(classE.day) + " - " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(classE.year), 9
+        /* TEXT, PROPS */
+        , _hoisted_28);
+      }), 128
+      /* KEYED_FRAGMENT */
+      ))], 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.forms["class"]]]), $data.errors["class"] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_35, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors["class"]), 1
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.forms.class_id]])]), $data.errors["class"] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors["class"]), 1
       /* TEXT */
       )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-        onClick: _cache[7] || (_cache[7] = function () {
+        onClick: _cache[8] || (_cache[8] = function () {
           return $options.addClass && $options.addClass.apply($options, arguments);
         }),
         "class": "add-classes-student"
-      }, _hoisted_37)]), _hoisted_38, _hoisted_39, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
+      }, _hoisted_31), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.forms.classesA, function (classA) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("ul", {
+          id: "classesList",
+          key: classA.id
+        }, [classA.level === 'elementary' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(classA.grade) + "° ano do fundamental " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(classA.day) + " - " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(classA.year), 1
+        /* TEXT */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+          onClick: function onClick($event) {
+            return $options.removeClass(classA.id);
+          }
+        }, "X", 8
+        /* PROPS */
+        , _hoisted_33)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), classA.level === 'high' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(classA.grade) + "° ano do médio " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(classA.day) + " - " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(classA.year), 1
+        /* TEXT */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+          onClick: function onClick($event) {
+            return $options.removeClass(classA.id);
+          }
+        }, "X", 8
+        /* PROPS */
+        , _hoisted_35)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+      }), 128
+      /* KEYED_FRAGMENT */
+      )), _hoisted_36, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
         href: "/alunos",
         "class": "back-to-students"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_40];
+          return [_hoisted_37];
         }),
         _: 1
         /* STABLE */
@@ -21106,47 +21752,55 @@ var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: ""
-}, "Etec Monsenhor Antonio magliano", -1
-/* HOISTED */
-);
-
-var _hoisted_22 = [_hoisted_20, _hoisted_21];
-var _hoisted_23 = {
+var _hoisted_21 = ["value"];
+var _hoisted_22 = {
   "class": "input-container-edit-student"
 };
 
-var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "gender"
-}, "Turma: ", -1
+}, "Tumas: ", -1
 /* HOISTED */
 );
 
-var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   value: "",
   selected: "",
   disabled: ""
-}, "Selecione a turma do aluno", -1
+}, "Selecione as turmas do aluno", -1
 /* HOISTED */
 );
 
-var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: ""
-}, "3° ano do médio 2020", -1
+var _hoisted_25 = ["value"];
+var _hoisted_26 = {
+  key: 0,
+  "class": "message-error"
+};
+
+var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Adicionar Turma", -1
 /* HOISTED */
 );
 
-var _hoisted_27 = [_hoisted_25, _hoisted_26];
+var _hoisted_28 = [_hoisted_27];
+var _hoisted_29 = {
+  key: 0,
+  "class": "li-class-list"
+};
+var _hoisted_30 = ["onClick"];
+var _hoisted_31 = {
+  key: 1,
+  "class": "li-class-list"
+};
+var _hoisted_32 = ["onClick"];
 
-var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "submit",
   "class": "save-informations-edit-student"
 }, "Salvar alterações", -1
 /* HOISTED */
 );
 
-var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Voltar");
+var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Voltar");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Link");
@@ -21156,7 +21810,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_layout, null, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-        onSubmit: _cache[7] || (_cache[7] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+        onSubmit: _cache[9] || (_cache[9] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
           return $options.formUpdateStudent && $options.formUpdateStudent.apply($options, arguments);
         }, ["prevent"])),
         "class": "form-edit-student"
@@ -21203,28 +21857,79 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* NEED_PATCH */
       ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.forms.gender]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
         name: "",
-        id: "",
         "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
-          return $data.forms.school = $event;
+          return $data.forms.school_id = $event;
         }),
-        "class": "select-school-student"
-      }, _hoisted_22, 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.forms.school]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
-        name: "",
+        onChange: _cache[6] || (_cache[6] = function ($event) {
+          return $options.changeSchool($data.forms.school_id);
+        }),
         id: "",
-        "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
-          return $data.forms["class"] = $event;
-        }),
         "class": "select-school-student"
-      }, _hoisted_27, 512
+      }, [_hoisted_20, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.schools, function (school) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+          key: school.id,
+          value: school.id
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(school.name), 9
+        /* TEXT, PROPS */
+        , _hoisted_21);
+      }), 128
+      /* KEYED_FRAGMENT */
+      ))], 544
+      /* HYDRATE_EVENTS, NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.forms.school_id]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [_hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+        name: "",
+        "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
+          return $data.forms.class_id = $event;
+        }),
+        id: "",
+        "class": "select-school-student"
+      }, [_hoisted_24, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.classesE, function (classE) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+          key: classE.id,
+          value: classE
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(classE.grade) + "° " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(classE.level) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(classE.day) + " - " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(classE.year), 9
+        /* TEXT, PROPS */
+        , _hoisted_25);
+      }), 128
+      /* KEYED_FRAGMENT */
+      ))], 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.forms["class"]]])]), _hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.forms.class_id]])]), $data.errors["class"] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors["class"]), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+        onClick: _cache[8] || (_cache[8] = function () {
+          return $options.addClass && $options.addClass.apply($options, arguments);
+        }),
+        "class": "add-classes-student"
+      }, _hoisted_28), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.forms.classesA, function (classA) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("ul", {
+          id: "classesList",
+          key: classA.id
+        }, [classA.level === 'elementary' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(classA.grade) + "° ano do fundamental " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(classA.day) + " - " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(classA.year), 1
+        /* TEXT */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+          onClick: function onClick($event) {
+            return $options.removeClass(classA.id);
+          }
+        }, "X", 8
+        /* PROPS */
+        , _hoisted_30)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), classA.level === 'high' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(classA.grade) + "° ano do médio " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(classA.day) + " - " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(classA.year), 1
+        /* TEXT */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+          onClick: function onClick($event) {
+            return $options.removeClass(classA.id);
+          }
+        }, "X", 8
+        /* PROPS */
+        , _hoisted_32)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+      }), 128
+      /* KEYED_FRAGMENT */
+      )), _hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
         href: "/alunos",
         "class": "back-to-students"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_29];
+          return [_hoisted_34];
         }),
         _: 1
         /* STABLE */
@@ -21421,7 +22126,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "html,\r\nbody {\r\n    margin: 0;\r\n    padding: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n}\r\n\r\n* {\r\n    outline: none;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n    text-decoration: none;\r\n}\r\n\r\n/* LAYOUT */\r\n.nav-layout {\r\n    display: flex;\r\n    align-items: center;\r\n    flex-wrap: wrap;\r\n    height: 50px;\r\n    justify-content: space-around;\r\n    background-color: rgb(51, 51, 51);\r\n    cursor: pointer;\r\n}\r\n\r\n.link-home {\r\n    color: aliceblue;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n    font-size: 20px;\r\n}\r\n\r\n.link-home:hover {\r\n    color: rgb(206, 206, 206);\r\n}\r\n\r\n/* HOME */\r\n\r\n.container-home {\r\n    display: flex;\r\n    flex-wrap: wrap;\r\n    justify-content: center;\r\n    align-items: center;\r\n    margin: auto;\r\n    width: 100%;\r\n}\r\n\r\n.box-home {\r\n    display: flex;\r\n    flex-wrap: wrap;\r\n    justify-content: space-around;\r\n    align-items: center;\r\n    width: 1200px;\r\n    height: 500px;\r\n}\r\n\r\n.options-home {\r\n    text-align: center;\r\n    width: 300px;\r\n    height: 300px;\r\n    background-color: aliceblue;\r\n    box-shadow: 2px -2px 5px rgba(0, 0, 0, 0.289);\r\n    transition: all linear 0.2s;\r\n    color: #000;\r\n}\r\n\r\n.options-home:hover {\r\n    width: 320px;\r\n    height: 320px;\r\n    transition: all linear 0.2s;\r\n}\r\n\r\n.img-container-home {\r\n    width: 100%;\r\n    height: 80%;\r\n    overflow: hidden;\r\n}\r\n\r\n.img-home {\r\n    -o-object-fit: cover;\r\n       object-fit: cover;\r\n    height: 100%;\r\n    width: 100%;\r\n    max-width: 400px;\r\n    max-height: 400px;\r\n    cursor: pointer;\r\n}\r\n\r\n.title-home {\r\n    font-size: 20px;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n}\r\n\r\n/* STUDENTS */\r\n\r\n.container-students {\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: center;\r\n    align-items: center;\r\n    width: 100%;\r\n    height: 90%;\r\n}\r\n\r\n.search-students-container {\r\n    margin: 50px;\r\n}\r\n\r\n.input-search-students {\r\n    width: 400px;\r\n    height: 35px;\r\n    background-color: rgb(216, 216, 216);\r\n    border: none;\r\n    padding: 0 10px;\r\n}\r\n\r\n.button-search-students {\r\n    background-color: rgba(100, 148, 237, 0.755);\r\n    color: aliceblue;\r\n    height: 35px;\r\n    font-size: 15px;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n    border: none;\r\n    cursor: pointer;\r\n}\r\n\r\n.button-search-students:hover {\r\n    background-color: rgba(58, 115, 221, 0.755);\r\n}\r\n\r\n.create-link-students {\r\n    color: #000;\r\n    margin-left: 20px;\r\n    font-size: 15px;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n    cursor: pointer;\r\n}\r\n\r\n.create-link-students:hover {\r\n    text-decoration: underline;\r\n}\r\n\r\n.table-students-container {\r\n    width: 1270px;\r\n    height: 500px;\r\n    overflow-y: scroll;\r\n    background-color: aliceblue;\r\n    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.35);\r\n}\r\n\r\n.table-students {\r\n    width: 100%;\r\n    text-align: center;\r\n}\r\n\r\n.table-students thead {\r\n    background-color: rgba(100, 148, 237, 0.755);\r\n    font-family: Arial;\r\n    color: #ffffff;\r\n}\r\n.table-students th,\r\n.table-students td {\r\n    padding: 15px;\r\n    font-family: Arial;\r\n}\r\n\r\n.table-students tbody {\r\n    font-size: 15px;\r\n}\r\n\r\n.table-students tbody tr:nth-child(2n) {\r\n    background-color: rgb(214, 214, 214);\r\n}\r\n\r\n.table-students tbody tr td:nth-child(1) {\r\n    width: 5%;\r\n}\r\n\r\n.table-students tbody tr td:nth-child(2) {\r\n    width: 20%;\r\n}\r\n\r\n.table-students tbody tr td:nth-child(3) {\r\n    width: 17%;\r\n}\r\n\r\n.table-students tbody tr td:nth-child(4) {\r\n    width: 5%;\r\n}\r\n\r\n.table-students tbody tr td:nth-child(5) {\r\n    width: 15%;\r\n}\r\n\r\n.table-students tbody tr td:nth-child(6) {\r\n    width: 25%;\r\n}\r\n\r\n.table-students tbody tr td:nth-child(7) {\r\n    width: 13%;\r\n}\r\n\r\n.button-remove-student {\r\n    margin-right: 10px;\r\n}\r\n\r\n.form-action-students {\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n}\r\n\r\n.link-edit-student {\r\n    margin-top: 10px;\r\n}\r\n\r\n/* STUDENTS EDIT*/\r\n\r\n.edit-student-container {\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    width: 100%;\r\n    height: 100%;\r\n}\r\n\r\n.box-edit-student-container {\r\n    margin-top: 70px;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    width: 1000px;\r\n    height: 500px;\r\n    overflow-y: scroll;\r\n    background-color: aliceblue;\r\n    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.453);\r\n}\r\n\r\n.form-edit-student-container {\r\n    width: 90%;\r\n    height: 90%;\r\n}\r\n\r\n.form-edit-student {\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: space-around;\r\n}\r\n\r\n.input-container-edit-student {\r\n    margin: 20px;\r\n    font-size: 17px;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n}\r\n\r\n.form-edit-student input {\r\n    padding: 0 10px;\r\n    width: 300px;\r\n    height: 35px;\r\n    background-color: rgb(208, 208, 208);\r\n    border: none;\r\n    border-radius: 5px;\r\n}\r\n\r\n.select-school-student {\r\n    margin-left: 30px;\r\n    width: auto;\r\n    height: 30px;\r\n    font-size: 16px;\r\n}\r\n\r\n.save-informations-edit-student {\r\n    margin: 20px auto;\r\n    width: 200px;\r\n    height: 30px;\r\n    border: none;\r\n    background-color: rgba(58, 115, 221, 0.755);\r\n    color: aliceblue;\r\n    font-size: 17px;\r\n    cursor: pointer;\r\n}\r\n\r\n.back-to-students {\r\n    margin: auto;\r\n}\r\n\r\n/* LEVEL */\r\n\r\n.level-container {\r\n    display: flex;\r\n    align-items: center;\r\n}\r\n\r\n.p-level-class {\r\n    margin-left: 30px;\r\n}\r\n\r\n.level-container input {\r\n    height: 14px;\r\n    width: 30px;\r\n    margin: 0;\r\n}\r\n\r\n.box-students-class {\r\n    width: 80%;\r\n    height: 400px;\r\n    background-color: aliceblue;\r\n    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.35);\r\n    overflow-y: scroll;\r\n}\r\n\r\n.align-students-class {\r\n    margin: 20px;\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: space-around;\r\n    align-items: center;\r\n    text-align: center;\r\n}\r\n\r\n.student-link-class {\r\n    margin: 10px;\r\n}\r\n\r\n.student-link-class:hover {\r\n    text-decoration: underline;\r\n}\r\n\r\n.message-error {\r\n    width: auto;\r\n    color: rgb(232, 34, 34);\r\n}\r\n\r\n.add-classes-student {\r\n    display: flex;\r\n    margin-top: 40px;\r\n    justify-content: center;\r\n    width: 140px;\r\n    height: 30px;\r\n    line-height: 0;\r\n    background-color: rgba(58, 115, 221, 0.755);\r\n    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.412);\r\n    color: #ffffff;\r\n    cursor: pointer;\r\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "html,\r\nbody {\r\n    margin: 0;\r\n    padding: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n}\r\n\r\n* {\r\n    outline: none;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n    text-decoration: none;\r\n}\r\n\r\n/* LAYOUT */\r\n.nav-layout {\r\n    display: flex;\r\n    align-items: center;\r\n    flex-wrap: wrap;\r\n    height: 50px;\r\n    justify-content: space-around;\r\n    background-color: rgb(51, 51, 51);\r\n    cursor: pointer;\r\n}\r\n\r\n.link-home {\r\n    color: aliceblue;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n    font-size: 20px;\r\n}\r\n\r\n.link-home:hover {\r\n    color: rgb(206, 206, 206);\r\n}\r\n\r\n/* HOME */\r\n\r\n.container-home {\r\n    display: flex;\r\n    flex-wrap: wrap;\r\n    justify-content: center;\r\n    align-items: center;\r\n    margin: auto;\r\n    width: 100%;\r\n}\r\n\r\n.box-home {\r\n    display: flex;\r\n    flex-wrap: wrap;\r\n    justify-content: space-around;\r\n    align-items: center;\r\n    width: 1200px;\r\n    height: 500px;\r\n}\r\n\r\n.options-home {\r\n    text-align: center;\r\n    width: 300px;\r\n    height: 300px;\r\n    background-color: aliceblue;\r\n    box-shadow: 2px -2px 5px rgba(0, 0, 0, 0.289);\r\n    transition: all linear 0.2s;\r\n    color: #000;\r\n}\r\n\r\n.options-home:hover {\r\n    width: 320px;\r\n    height: 320px;\r\n    transition: all linear 0.2s;\r\n}\r\n\r\n.img-container-home {\r\n    width: 100%;\r\n    height: 80%;\r\n    overflow: hidden;\r\n}\r\n\r\n.img-home {\r\n    -o-object-fit: cover;\r\n       object-fit: cover;\r\n    height: 100%;\r\n    width: 100%;\r\n    max-width: 400px;\r\n    max-height: 400px;\r\n    cursor: pointer;\r\n}\r\n\r\n.title-home {\r\n    font-size: 20px;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n}\r\n\r\n/* STUDENTS */\r\n\r\n.container-students {\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: center;\r\n    align-items: center;\r\n    width: 100%;\r\n    height: 90%;\r\n}\r\n\r\n.search-students-container {\r\n    margin: 50px;\r\n}\r\n\r\n.input-search-students {\r\n    width: 400px;\r\n    height: 35px;\r\n    background-color: rgb(216, 216, 216);\r\n    border: none;\r\n    padding: 0 10px;\r\n}\r\n\r\n.button-search-students {\r\n    background-color: rgba(100, 148, 237, 0.755);\r\n    color: aliceblue;\r\n    height: 35px;\r\n    font-size: 15px;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n    border: none;\r\n    cursor: pointer;\r\n}\r\n\r\n.button-search-students:hover {\r\n    background-color: rgba(58, 115, 221, 0.755);\r\n}\r\n\r\n.create-link-students {\r\n    color: #000;\r\n    margin-left: 20px;\r\n    font-size: 15px;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n    cursor: pointer;\r\n}\r\n\r\n.create-link-students:hover {\r\n    text-decoration: underline;\r\n}\r\n\r\n.table-students-container {\r\n    width: 1270px;\r\n    height: 500px;\r\n    overflow-y: scroll;\r\n    background-color: aliceblue;\r\n    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.35);\r\n}\r\n\r\n.table-students {\r\n    width: 100%;\r\n    text-align: center;\r\n}\r\n\r\n.table-students thead {\r\n    background-color: rgba(100, 148, 237, 0.755);\r\n    font-family: Arial;\r\n    color: #ffffff;\r\n}\r\n.table-students th,\r\n.table-students td {\r\n    padding: 15px;\r\n    font-family: Arial;\r\n}\r\n\r\n.table-students tbody {\r\n    font-size: 15px;\r\n}\r\n\r\n.table-students tbody tr:nth-child(2n) {\r\n    background-color: rgb(214, 214, 214);\r\n}\r\n\r\n.table-students tbody tr td:nth-child(1) {\r\n    width: 5%;\r\n}\r\n\r\n.table-students tbody tr td:nth-child(2) {\r\n    width: 20%;\r\n}\r\n\r\n.table-students tbody tr td:nth-child(3) {\r\n    width: 17%;\r\n}\r\n\r\n.table-students tbody tr td:nth-child(4) {\r\n    width: 5%;\r\n}\r\n\r\n.table-students tbody tr td:nth-child(5) {\r\n    width: 15%;\r\n}\r\n\r\n.table-students tbody tr td:nth-child(6) {\r\n    width: 25%;\r\n}\r\n\r\n.table-students tbody tr td:nth-child(7) {\r\n    width: 13%;\r\n}\r\n\r\n.button-remove-student {\r\n    margin-right: 10px;\r\n}\r\n\r\n.form-action-students {\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n}\r\n\r\n.link-edit-student {\r\n    margin-top: 10px;\r\n}\r\n\r\n/* STUDENTS EDIT*/\r\n\r\n.edit-student-container {\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    width: 100%;\r\n    height: 100%;\r\n}\r\n\r\n.box-edit-student-container {\r\n    margin-top: 70px;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    width: 1000px;\r\n    height: 500px;\r\n    overflow-y: scroll;\r\n    background-color: aliceblue;\r\n    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.453);\r\n}\r\n\r\n.form-edit-student-container {\r\n    width: 90%;\r\n    height: 90%;\r\n}\r\n\r\n.form-edit-student {\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: space-around;\r\n}\r\n\r\n.input-container-edit-student {\r\n    margin: 20px;\r\n    font-size: 17px;\r\n    font-family: Arial, Helvetica, sans-serif;\r\n}\r\n\r\n.form-edit-student input {\r\n    padding: 0 10px;\r\n    width: 300px;\r\n    height: 35px;\r\n    background-color: rgb(208, 208, 208);\r\n    border: none;\r\n    border-radius: 5px;\r\n}\r\n\r\n.select-school-student {\r\n    margin-left: 30px;\r\n    width: auto;\r\n    height: 30px;\r\n    font-size: 16px;\r\n}\r\n\r\n.save-informations-edit-student {\r\n    margin: 20px auto;\r\n    width: 200px;\r\n    height: 30px;\r\n    border: none;\r\n    background-color: rgba(58, 115, 221, 0.755);\r\n    color: aliceblue;\r\n    font-size: 17px;\r\n    cursor: pointer;\r\n}\r\n\r\n.back-to-students {\r\n    margin: auto;\r\n}\r\n\r\n/* LEVEL */\r\n\r\n.level-container {\r\n    display: flex;\r\n    align-items: center;\r\n}\r\n\r\n.p-level-class {\r\n    margin-left: 30px;\r\n}\r\n\r\n.level-container input {\r\n    height: 14px;\r\n    width: 30px;\r\n    margin: 0;\r\n}\r\n\r\n.box-students-class {\r\n    width: 80%;\r\n    height: 400px;\r\n    background-color: aliceblue;\r\n    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.35);\r\n    overflow-y: scroll;\r\n}\r\n\r\n.align-students-class {\r\n    margin: 20px;\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: space-around;\r\n    align-items: center;\r\n    text-align: center;\r\n}\r\n\r\n.student-link-class {\r\n    margin: 10px;\r\n}\r\n\r\n.student-link-class:hover {\r\n    text-decoration: underline;\r\n}\r\n\r\n.message-error {\r\n    width: auto;\r\n    color: rgb(232, 34, 34);\r\n}\r\n\r\n.add-classes-student {\r\n    display: flex;\r\n    margin-top: 40px;\r\n    justify-content: center;\r\n    width: 140px;\r\n    height: 30px;\r\n    line-height: 0;\r\n    background-color: rgba(58, 115, 221, 0.755);\r\n    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.412);\r\n    color: #ffffff;\r\n    cursor: pointer;\r\n}\r\n\r\n.li-class-list {\r\n    display: flex;\r\n    align-items: center;\r\n    text-align: center;\r\n}\r\n\r\n.li-class-list div {\r\n    width: 20px;\r\n    height: 20px;\r\n    margin-left: 20px;\r\n    background-color: rgb(113, 114, 114);\r\n    border-radius: 100%;\r\n    color: azure;\r\n    cursor: pointer;\r\n    font-weight: bold;\r\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

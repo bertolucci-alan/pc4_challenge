@@ -35,20 +35,28 @@
 
                         <div class="input-container-edit-student">
                             <label for="gender">Escola: </label>
-                            <select name="" id="" v-model="forms.school" class="select-school-student">
+                            <select  name="" v-model="forms.school_id" @change="changeSchool(forms.school_id)" id="" class="select-school-student">
                                 <option value="" selected disabled>Selecione a escola do aluno</option>
-                                <option value="">Etec Monsenhor Antonio magliano</option>
+                                <option v-for="school in schools" :key="school.id" :value="school.id">{{ school.name }}</option>
                             </select>
                         </div>
 
                         <div class="input-container-edit-student">
-                            <label for="gender">Turma: </label>
-                            <select name="" id="" v-model="forms.class" class="select-school-student">
-                                <option value="" selected disabled>Selecione a turma do aluno</option>
-                                <option value="">3° ano do médio 2020</option>
+                            <label for="gender">Tumas: </label>
+                            <select  name="" v-model="forms.class_id" id="" class="select-school-student">
+                                <option value="" selected disabled>Selecione as turmas do aluno</option>
+                                <option v-for="classE in classesE" :key="classE.id" :value="classE">{{ classE.grade }}° {{classE.level}} {{classE.day}} - {{ classE.year }}</option>
                             </select>
                         </div>
+                        <p v-if="errors.class" class="message-error">{{ errors.class }}</p>
+                        <div @click="addClass" class="add-classes-student"><p>Adicionar Turma</p></div>
+                        <ul id="classesList" v-for="classA in forms.classesA" :key="classA.id">
+                            <li v-if="classA.level === 'elementary'" class="li-class-list">
+                                <p>{{ classA.grade }}° ano do fundamental {{classA.day}} - {{ classA.year }} </p><div @click="removeClass(classA.id)">X</div></li>
 
+                            <li v-if="classA.level === 'high'" class="li-class-list">
+                                <p>{{ classA.grade }}° ano do médio {{classA.day}} - {{ classA.year }} </p><div @click="removeClass(classA.id)">X</div></li>
+                        </ul>
                         <button type="submit" class="save-informations-edit-student">Salvar alterações</button>
                         <Link href="/alunos" class="back-to-students">Voltar</Link>
                     </form>
@@ -64,7 +72,9 @@ import Layout from '../../Layouts/App.vue';
 export default {
 
     props: {
-        student: Object | Array
+        student: Object | Array,
+        classE: Object | Array,
+        classA: Object | Array,
     },
 
     data() {
@@ -76,16 +86,55 @@ export default {
                 phone: this.student.phone,
                 birth: this.student.birth,
                 gender: this.student.gender,
-                school: this.student.school,
-                class: this.student.class,
+                school_id: this.student.school_id,
+                class_id: null,
+                classesA: this.classA,
             },
             errors: {},
+            schools: {},
+            classesE: this.classE,
             valid: null,
         }
     },
 
     methods: {
-          formUpdateStudent() {
+          changeSchool(value) {
+              axios.get(`/api/classes/${this.forms.id}/${this.forms.school_id}`).then((response) => {
+                  this.classesE = response.data.classE;
+                  this.forms.classesA = [];
+              })
+          },
+
+          addClass() {
+            this.errors = {};
+            this.valid = true;
+
+            if(!this.forms.class_id) {
+                this.valid = false;
+                return this.errors.class = "Selecione uma turma.";
+            }
+
+            this.forms.classesA.forEach(classA => {
+                if(classA == this.forms.class_id) {
+                    this.valid = false;
+                    return this.errors.class = "Aluno já incluído na turma.";
+                }
+            });
+
+            if(this.valid) {
+                this.forms.classesA.push(this.forms.class_id);
+            }
+        },
+
+        removeClass(value) {
+            let removeClassA = this.forms.classesA.findIndex(classA => classA.id === value)
+
+            if(removeClassA > -1) {
+                    this.forms.classesA.splice(removeClassA ,1);
+            }
+        },
+        
+        formUpdateStudent() {
             this.errors = {};
             this.valid = true;
 
@@ -103,12 +152,18 @@ export default {
             }
 
             if(this.valid) {
-                axios.post('/api/update-student', this.forms).then((response) => {
+                axios.put('/api/update-student', this.forms).then((response) => {
                    location.href = "/alunos";
                });
             }
 
         }
+    },
+
+    mounted() {
+        axios.get('/api/schools').then((response) => {
+            this.schools = response.data.schools;
+        })
     },
 
     components: {

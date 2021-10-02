@@ -3,25 +3,19 @@
         <div class="edit-student-container">
             <div class="box-edit-student-container">
                 <div class="form-edit-student-container">
-                    <form action="" class="form-edit-student">
+                    <form @submit.prevent="formRegisterSchool" class="form-edit-student">
                         <div class="input-container-edit-student">
                             <label for="name">Nome: </label>
-                            <input type="text" name="name">
+                            <input type="text" v-model="forms.name" name="name">
+                            <p v-if="errors.name" class="message-error">{{ errors.name }}</p>
                         </div>
                         <div class="input-container-edit-student">
                             <label for="street">Endereço: </label>
-                            <input type="text" name="street">
+                            <input type="text" v-model="forms.street" name="street">
+                            <p v-if="errors.street" class="message-error">{{ errors.street }}</p>
                         </div>
 
-                        <p>TURMAS: </p>
-                        <form action="" class="form-remove-student">
-                                <div class="box-students-class">
-                                    <div class="align-students-class">
-                                        <Link href="/editar-turma" class="student-link-class">3 ano - médio - noturno - 2020</Link>
-                                    </div>
-                                </div>
-                        </form>
-                        <button class="save-informations-edit-student">Salvar alterações</button>
+                        <button type="submit" class="save-informations-edit-student">Salvar alterações</button>
                         <Link href="/escolas" class="back-to-students">Voltar</Link>
                     </form>
                 </div>
@@ -34,9 +28,44 @@
 import { Link } from '@inertiajs/inertia-vue3';
 import Layout from '../../Layouts/App.vue';
 export default {
-    layout: Layout,
+
+    data() {
+        return {
+            forms: {
+                name:null,
+                street: null,
+            },
+            errors: {},
+            valid: null,
+        }
+    },
+
+    methods: {
+        formRegisterSchool() {
+            this.errors = {};
+            this.valid = true;
+
+            if(!this.forms.name) {
+                this.valid = false;
+                this.errors.name = "Nome da escola obrigatório!";
+            }
+
+            if(!this.forms.street){
+                this.valid = false;
+                this.errors.street = "Endereço da escola obrigatório!";
+            }
+
+            if(this.valid) {
+                axios.post('api/register-school', this.forms).then((response) => {
+                    location.href = "/escolas";
+                })
+            }
+        }
+    },
+
     components: {
         Link,
+        Layout,
     }
 
 };

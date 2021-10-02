@@ -5,17 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Student extends Model
+class Classes extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'school_id',
-        'name',
-        'email',
-        'phone',
-        'birth',
-        'gender',
+        'year',
+        'level',
+        'grade',
+        'day',
     ];
 
     public function school()
@@ -23,8 +22,8 @@ class Student extends Model
         return $this->belongsTo(School::class, foreignKey: 'school_id', ownerKey: 'id');
     }
 
-    public function classes()
+    public function students()
     {
-        return $this->belongsToMany(Classes::class, table: 'students_classes', foreignPivotKey: 'student_id', relatedPivotKey: 'class_id',);
+        return $this->belongsToMany(Student::class, table: 'students_classes', foreignPivotKey: 'class_id', relatedPivotKey: 'student_id',);
     }
 }

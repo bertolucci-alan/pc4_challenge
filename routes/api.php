@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\ClassController;
+use App\Http\Controllers\Api\SchoolController;
 use App\Http\Controllers\Api\StudentController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,14 +22,59 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+/**
+ * STUDENTS
+ */
+
 Route::get('/students', [StudentController::class, 'index'])
     ->name('student.index');
 
 Route::post('/search-students', [StudentController::class, 'search'])
     ->name('student.search');
 
-Route::post('/update-student', [StudentController::class, 'update'])
+Route::put('/update-student', [StudentController::class, 'update'])
     ->name('student.update');
 
 Route::post('/register-student', [StudentController::class, 'register'])
     ->name('student.register');
+
+Route::delete('/delete-student/{id}', [StudentController::class, 'delete'])
+    ->name('student.delete');
+
+/**
+ * CLASSES
+ */
+
+Route::get('/classes', [ClassController::class, 'index'])
+    ->name('classe.index');
+
+Route::get('/classes/{student}/{school}', [ClassController::class, 'show'])
+    ->name('classe.show');
+
+Route::post('/register-class', [ClassController::class, 'register'])
+    ->name('class.register');
+
+Route::put('/update-class', [ClassController::class, 'update'])
+    ->name('class.update');
+
+Route::post('/search-classes', [ClassController::class, 'search'])
+    ->name('class.search');
+
+/**
+ * SCHOOLS
+ */
+
+Route::get('/schools', [SchoolController::class, 'index'])
+    ->name('school.index');
+
+Route::post('/search-schools', [SchoolController::class, 'search'])
+    ->name('school.search');
+
+Route::post('/register-school', [SchoolController::class, 'register'])
+    ->name('school.register');
+
+Route::put('/update-school', [SchoolController::class, 'update'])
+    ->name('school.update');
+
+Route::delete('/delete-school/{id}', [SchoolController::class, 'delete'])
+    ->name('school.delete');
