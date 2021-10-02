@@ -17,8 +17,8 @@
                             <th>E-mail</th>
                             <th>Nascimento</th>
                             <th>Telefone</th>
-                            <th>Turmas</th>
                             <th>Escola</th>
+                            <th>Turmas</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -29,7 +29,7 @@
                             <td>{{ student.email }}</td>
                             <td>{{ student.birth }}</td>
                             <td>{{ student.phone }}</td>
-                            <td>{{ student.id }}</td>
+                            <td>{{ student.school.name }}</td>
                             <td>{{ student.id }}</td>
                             <td>
                                 <form @submit.prevent="formDeleteStudent(student.id)">
@@ -76,6 +76,7 @@ export default {
             this.valid = true;
             
             if(!this.forms.search) {
+                this.valid = false;
                 return axios.get('api/students').then((response) => {
                     this.students = response.data.students;
                 })

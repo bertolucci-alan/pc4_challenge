@@ -26,8 +26,8 @@
                             <td>{{school.id}}</td>
                             <td>{{school.name}}</td>
                             <td>{{school.street}}</td>
-                            <td>{{school.id}}</td>
-                            <td>{{school.id}}</td>
+                            <td>{{school.classes.length}}</td>
+                            <td>{{school.students.length}}</td>
                             <td>
                                 <form @submit.prevent="formDeleteSchool(school.id)">
                                     <button type="submit" class="button-remove-student">Excluir</button>
@@ -85,6 +85,7 @@ export default {
     mounted() {
         axios.get('api/schools').then((response) => {
             this.schools = response.data.schools;
+            console.log(response);
         })
     },
 

@@ -48,6 +48,9 @@ Route::delete('/delete-student/{id}', [StudentController::class, 'delete'])
 Route::get('/classes', [ClassController::class, 'index'])
     ->name('classe.index');
 
+Route::get('/classes/{student}/{school}', [ClassController::class, 'show'])
+    ->name('classe.show');
+
 Route::post('/register-class', [ClassController::class, 'register'])
     ->name('class.register');
 

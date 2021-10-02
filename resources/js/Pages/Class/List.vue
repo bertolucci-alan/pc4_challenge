@@ -30,7 +30,7 @@
                             <td>{{ clasS.grade }}</td>
                             <td>{{ clasS.day }}</td>
                             <td>{{ clasS.school.name }}</td>
-                            <td>{{ clasS.id }}</td>
+                            <td>{{ clasS.students.length }}</td>
                             <td>
                                 <form action="">
                                     <div  class="form-action-students">

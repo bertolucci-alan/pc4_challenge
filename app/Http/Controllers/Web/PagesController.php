@@ -33,22 +33,33 @@ class PagesController extends Controller
 
     public function editStudent($name, Student $id)
     {
+        $classE = Classes::where('school_id', '=', $id->school_id)->get();
+        $classA = $id->classes()->get();
+
         return Inertia::render('Student/Update', [
-            'student' => $id
+            'student' => $id,
+            'classE' => $classE,
+            'classA' => $classA,
         ]);
     }
 
     public function editClass(Classes $id)
     {
+        $students = $id->students()->get();
+
         return Inertia::render('Class/Update', [
             'classes' => $id,
+            'students' => $students,
         ]);
     }
 
     public function editSchool($name, School $id)
     {
+        $classes = $id->classes()->get();
+
         return Inertia::render('School/Update', [
             'school' => $id,
+            'classes' => $classes,
         ]);
     }
 

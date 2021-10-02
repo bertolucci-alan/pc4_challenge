@@ -17,11 +17,12 @@
 
                         <p>TURMAS: </p>
                         <div class="box-students-class">
-                            <div class="align-students-class">
-                                <Link href="/editar-turma" class="student-link-class">3 ano - médio - noturno - 2020</Link>
+                            <h4  v-if="classes.length == 0">Nenhuma turma encontrada.</h4>
+                            <div class="align-students-class" v-for="clasS in classes" :key="clasS.id">
+                                <Link :href="link + clasS.id" class="link-edit-student">{{clasS.grade}}° ano - {{clasS.level}} {{clasS.day}} - {{clasS.year}}</Link>
                             </div>
                         </div>
- 
+                        
                         <button class="save-informations-edit-student">Salvar alterações</button>
                         <Link href="/escolas" class="back-to-students">Voltar</Link>
                     </form>
@@ -37,6 +38,7 @@ import Layout from '../../Layouts/App.vue';
 export default {
     props: {
         school: Object | Array,
+        classes: Object | Array,
     },
 
     data() {
@@ -48,6 +50,7 @@ export default {
             },
             errors: {},
             valid: null,
+            link: "/editar-turma/",
         }
     },
 

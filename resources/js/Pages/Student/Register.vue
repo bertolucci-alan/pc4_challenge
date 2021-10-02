@@ -43,33 +43,29 @@
                         </div>
 
                         <div class="input-container-edit-student">
-                            <label for="school">Escola: </label>
-                            <select name="school" v-model="forms.school" id="" class="select-school-student">
-                                <option value="" selected disabled>
-                                    Selecione a escola do aluno
-                                </option>
-                                <option value="Etec Monsenhor Antonio magliano">
-                                    Etec Monsenhor Antonio magliano
-                                </option>
+                            <label for="gender">Escola: </label>
+                            <select  name="" v-model="forms.school_id" @change="changeSchool(forms.school_id)" id="" class="select-school-student">
+                                <option value="" selected disabled>Selecione a escola do aluno</option>
+                                <option v-for="school in schools" :key="school.id" :value="school.id">{{ school.name }}</option>
                             </select>
                         </div>
 
                         <div class="input-container-edit-student">
-                            <label for="gender">Turma: </label>
-                            <select name="gender" id="" v-model="forms.class" class="select-school-student">
-                                <option value="" selected disabled>
-                                    Selecione a turma do aluno
-                                </option>
-                                <option value="3° ano do médio 2020">3° ano do médio 2020</option>
-                                <option value="4° ano do médio 2020">4° ano do médio 2020</option>
-                                <option value="1° ano do médio 2020">1° ano do médio 2020</option>
-                                <option value="5° ano do médio 2020">5° ano do médio 2020</option>
-                                <option value="6° ano do médio 2020">6° ano do médio 2020</option>
+                            <label for="gender">Tumas: </label>
+                            <select  name="" v-model="forms.class_id" id="" class="select-school-student">
+                                <option value="" selected disabled>Selecione as turmas do aluno</option>
+                                <option v-for="classE in classesE" :key="classE.id" :value="classE">{{ classE.grade }}° {{classE.level}} {{classE.day}} - {{ classE.year }}</option>
                             </select>
-                            <p v-if="errors.class" class="message-error">{{ errors.class }}</p>
-                            <div @click="addClass" class="add-classes-student"><p>Adicionar Turma</p></div>
                         </div>
-                        <ul id="classesList"></ul>
+                        <p v-if="errors.class" class="message-error">{{ errors.class }}</p>
+                        <div @click="addClass" class="add-classes-student"><p>Adicionar Turma</p></div>
+                        <ul id="classesList" v-for="classA in forms.classesA" :key="classA.id">
+                            <li v-if="classA.level === 'elementary'" class="li-class-list">
+                                <p>{{ classA.grade }}° ano do fundamental {{classA.day}} - {{ classA.year }} </p><div @click="removeClass(classA.id)">X</div></li>
+
+                            <li v-if="classA.level === 'high'" class="li-class-list">
+                                <p>{{ classA.grade }}° ano do médio {{classA.day}} - {{ classA.year }} </p><div @click="removeClass(classA.id)">X</div></li>
+                        </ul>
                         <button class="save-informations-edit-student">Salvar alterações</button>
                         <Link href="/alunos" class="back-to-students">Voltar</Link>
                     </form>
@@ -93,29 +89,51 @@ export default {
                 birth: null,
                 gender: null,
                 school: null,
-                classes: [],
-                class: null,
+                classesA: [],
+                class_id: null,
             },
             errors: {},
+            classesE: null,
+            schools: {},
             valid: null,
         }
     },
 
     methods: {
+        changeSchool(value) {
+              axios.get(`/api/classes/${this.forms.id}/${this.forms.school_id}`).then((response) => {
+                  this.classesE = response.data.classE;
+                  this.forms.classesA = [];
+              })
+          },
+
         addClass() {
             this.errors = {};
+            this.valid = true;
 
-            if(!this.forms.class) {
+            if(!this.forms.class_id) {
+                this.valid = false;
                 return this.errors.class = "Selecione uma turma.";
             }
 
-            if(this.forms.classes.find(element => element === this.forms.class)) {
-                return this.errors.class = "Aluno já incluído na turma.";
-            }
+            this.forms.classesA.forEach(classA => {
+                if(classA == this.forms.class_id) {
+                    this.valid = false;
+                    return this.errors.class = "Aluno já incluído na turma.";
+                }
+            });
 
-            let ul = document.querySelector('#classesList');
-            ul.innerHTML += "<li>" + this.forms.class + "</li>"
-            this.forms.classes.push(this.forms.class);
+            if(this.valid) {
+                this.forms.classesA.push(this.forms.class_id);
+            }
+        },
+
+        removeClass(value) {
+            let removeClassA = this.forms.classesA.findIndex(classA => classA.id === value)
+
+            if(removeClassA > -1) {
+                    this.forms.classesA.splice(removeClassA ,1);
+            }
         },
 
         formRegisterStudent() {
@@ -134,6 +152,14 @@ export default {
                 this.valid = false;
                 this.errors.birth = "Formato incorreto!";
             }
+            if(this.forms.birth && this.forms.birth.length > 10){
+                this.valid = false;
+                this.errors.birth = "Formato incorreto!";
+            }
+            if(this.forms.birth && this.forms.birth.length > 10){
+                this.valid = false;
+                this.errors.birth = "Formato incorreto!";
+            }
 
             if(this.valid){
                 axios.post('api/register-student', this.forms).then((response) => {
@@ -141,6 +167,12 @@ export default {
                 })
             }
         }
+    },
+
+    mounted() {
+        axios.get('/api/schools').then((response) => {
+            this.schools = response.data.schools;
+        })
     },
 
     components: {

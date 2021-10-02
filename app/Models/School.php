@@ -14,8 +14,13 @@ class School extends Model
         'street',
     ];
 
-    public function class()
+    public function classes()
     {
         return $this->hasMany(Classes::class, foreignKey: 'school_id', localKey: 'id');
+    }
+
+    public function students()
+    {
+        return $this->hasMany(Student::class, foreignKey: 'school_id', localKey: 'id');
     }
 }

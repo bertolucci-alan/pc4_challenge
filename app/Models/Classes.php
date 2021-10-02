@@ -21,4 +21,9 @@ class Classes extends Model
     {
         return $this->belongsTo(School::class, foreignKey: 'school_id', ownerKey: 'id');
     }
+
+    public function students()
+    {
+        return $this->belongsToMany(Student::class, table: 'students_classes', foreignPivotKey: 'class_id', relatedPivotKey: 'student_id',);
+    }
 }

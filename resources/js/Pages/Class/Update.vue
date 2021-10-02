@@ -40,13 +40,12 @@
                         </div>
 
                         <p>ALUNOS: </p>
-                        <form action="" class="form-remove-student">
-                                <div class="box-students-class">
-                                    <div class="align-students-class">
-                                        <Link href="/editar-aluno" class="student-link-class">Alan dos Santos Bertolucci</Link>
-                                    </div>
+                            <div class="box-students-class">
+                                <h4  v-if="students.length == 0">Nenhum aluno encontrado.</h4>
+                                <div class="align-students-class" v-for="student in students" :key="student.id">
+                                    <Link :href="link + student.name.split(' ').join('-').toLowerCase() + '/' + student.id" class="link-edit-student">{{ student.name }}</Link>
                                 </div>
-                        </form>
+                            </div>
                         <button class="save-informations-edit-student">Salvar alterações</button>
                         <Link href="/turmas" class="back-to-students">Voltar</Link>
                     </form>
@@ -62,6 +61,7 @@ import Layout from '../../Layouts/App.vue';
 export default {
     props: {
         classes: String | Array | Object,
+        students: String | Array | Object,
     },
 
     data() {
@@ -77,6 +77,7 @@ export default {
             schools: {},
             errors: {},
             valid: null,
+            link: "/editar-aluno/",
         }
     },
 
@@ -122,7 +123,6 @@ export default {
     mounted() {
         axios.get('/api/schools').then((response) => {
             this.schools = response.data.schools;
-            console.log(this.classes);
         })
     },
 

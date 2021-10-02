@@ -10,7 +10,7 @@ class SchoolController extends Controller
 {
     public function index()
     {
-        $schools = School::all();
+        $schools = School::with('classes')->with('students')->get();
 
         return response()->json(['schools' => $schools]);
     }
@@ -40,6 +40,6 @@ class SchoolController extends Controller
     {
         $id->delete();
 
-        return response()->json(['school' => $id]);
+        return response()->json();
     }
 }

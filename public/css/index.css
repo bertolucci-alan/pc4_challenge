@@ -341,3 +341,20 @@ body {
     color: #ffffff;
     cursor: pointer;
 }
+
+.li-class-list {
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.li-class-list div {
+    width: 20px;
+    height: 20px;
+    margin-left: 20px;
+    background-color: rgb(113, 114, 114);
+    border-radius: 100%;
+    color: azure;
+    cursor: pointer;
+    font-weight: bold;
+}
