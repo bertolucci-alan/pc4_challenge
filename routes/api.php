@@ -60,6 +60,9 @@ Route::put('/update-class', [ClassController::class, 'update'])
 Route::post('/search-classes', [ClassController::class, 'search'])
     ->name('class.search');
 
+Route::delete('/delete-class/{id}', [ClassController::class, 'delete'])
+    ->name('class.delete');
+
 /**
  * SCHOOLS
  */
