@@ -27,7 +27,7 @@ class ClassController extends Controller
 
     public function search(Request $request)
     {
-        $classes = Classes::where('year', 'LIKE', '%' . $request->search . '%')->with('school')->get();
+        $classes = Classes::where('year', 'LIKE', '%' . $request->search . '%')->with('school')->with('students')->get();
 
         return response()->json(['classes' => $classes]);
     }
@@ -41,7 +41,7 @@ class ClassController extends Controller
 
     public function update(Request $request)
     {
-        $class = Classes::find($request->id)->update($request->only('year', 'level', 'grade', 'day'));
+        $class = Classes::find($request->id)->update($request->only('school_id', 'year', 'level', 'grade', 'day'));
 
         return response()->json(['class' => $class]);
     }

@@ -14,7 +14,7 @@ class StudentController extends Controller
 {
     public function index()
     {
-        $students = Student::with('school')->get();
+        $students = Student::with('school')->with('classes')->get();
 
         return response()->json(['students' => $students]);
     }
@@ -56,7 +56,7 @@ class StudentController extends Controller
 
     public function search(Request $request)
     {
-        $students = Student::where('name', 'LIKE', '%' . $request->search . '%')->with('school')->get();
+        $students = Student::where('name', 'LIKE', '%' . $request->search . '%')->with('school')->with('classes')->get();
 
         return response()->json(['students' => $students]);
     }

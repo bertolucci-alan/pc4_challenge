@@ -32,7 +32,7 @@ class SchoolController extends Controller
 
     public function search(Request $request)
     {
-        $schools = School::where('name', 'LIKE', '%' . $request->search . '%')->get();
+        $schools = School::where('name', 'LIKE', '%' . $request->search . '%')->with('classes')->with('students')->get();
         return response()->json(['schools' => $schools]);
     }
 

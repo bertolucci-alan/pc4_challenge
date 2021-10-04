@@ -30,7 +30,7 @@
                             <td>{{ student.birth }}</td>
                             <td>{{ student.phone }}</td>
                             <td>{{ student.school.name }}</td>
-                            <td>{{ student.id }}</td>
+                            <td>{{ student.classes.length }}</td>
                             <td>
                                 <form @submit.prevent="formDeleteStudent(student.id)">
                                     <div  class="form-action-students">

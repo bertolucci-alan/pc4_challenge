@@ -32,7 +32,7 @@
                             <td>{{ clasS.school.name }}</td>
                             <td>{{ clasS.students.length }}</td>
                             <td>
-                                <form action="">
+                                <form @submit.prevent="formDeleteClass(clasS.id)">
                                     <div  class="form-action-students">
                                         <button class="button-remove-student">Excluir</button>
                                         <Link :href="link + clasS.id" class="link-edit-student">Editar</Link>
@@ -77,6 +77,12 @@ export default {
                     this.classes = response.data.classes;
                 });
             }
+        },
+
+        formDeleteClass (value) {
+            axios.delete('/api/delete-class/' + value).then((response) => {
+                location.href = "/turmas";
+            })
         }
     },
 
