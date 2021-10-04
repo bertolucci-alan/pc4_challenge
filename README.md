@@ -1,64 +1,141 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+## Teste - PC4
+<strong>Obs :</strong> Alguns dados podem estar em inglês e outros em português. Como queria acabar o teste num tempo bom , acabei focando apenas na funcionalidade.
+<br/>
+<br/>
+<strong>Objetivo :</strong> Elaborar um sistema que armazena dados de Escolas, Turmas e Alunos, com interações e relações. Os campos que foram dados como obrigatórios estão com validações para que, quando um formulário for enviado com algum desses campos vazios, não seja executada a request na API.
+<br/>
+<strong>Tecnologias :</strong> Laravel 8 e Vue.js 3.
+<br/><br/><br/><br/>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Breve visualização:
+Escola -> Turma -> Aluno
 
-## About Laravel
+<img src="https://github.com/bertolucci-alan/pc4_challenge/blob/master/readme/school_class_student.gif" width="600"/>
+<br/><br/>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Tela inicial: 
+<hr>
+Aqui podemos ver a página principal do sistema, onde é possível se locomover pelos dados de escolas, turmas e alunos apenas clicando em seus respectivos ícones ou navegando pela barra acima, utilizando o método SPA do Vue.js. <br/><br/>
+<img src="https://github.com/bertolucci-alan/pc4_challenge/blob/master/readme/main.gif" width="600"/>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+SPA:<br/><br/>
+<img src="https://github.com/bertolucci-alan/pc4_challenge/blob/master/readme/spa.gif" width="600"/>
+<br/><br/><br/><br/>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Escola: 
+<hr>
+Nesta tela podemos ver como os dados das escolas são organizados em uma tabela, com as informações: Nome, endereço, quantidade de turmas e quantidade de alunos, também uma coluna de ações contendo os métodos de exclusão e edição, além dos botões de registrar e pesquisar escolas pelo ano. <br/><br/>
 
-## Learning Laravel
+<img src="https://github.com/bertolucci-alan/pc4_challenge/blob/master/readme/school.jpg" width="600"/>
+<br/>
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Começando pelas interações com as escolas, temos o método de registro com os campos: Nome da escola e Endereço: <br/><br/>
+<img src="https://github.com/bertolucci-alan/pc4_challenge/blob/master/readme/school_register.gif" width="600"/>
+<br/>
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Ao clicar para editar uma determinada escola, uma consulta no banco de dados é feita para retornar as respectivas turmas que estão ligadas a esta escola, lembrando que o relacionamente de turmas para escola é de muitos para um. Campos de edição: Nome da escola e Endereço.
 
-## Laravel Sponsors
+<img src="https://github.com/bertolucci-alan/pc4_challenge/blob/master/readme/school_update.gif" width="600"/>
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Após ter digitado o ano da escola que queira pesquisar e ter clicado no botão, será feito uma consulta pela API, essa pegará as escolas que possuem semelhança do que foi digitado e trará num array todas as escolas. Caso o botão for clicado sem nada no input, será devolvida todas as escolas registradas no sistema.
 
-### Premium Partners
+<img src="https://github.com/bertolucci-alan/pc4_challenge/blob/master/readme/school_search.gif" width="600"/>
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
 
-## Contributing
+Pressionando o botão "Excluir", a escola e todas as relações com alunos e turmas serão excluídas por conta das propriedades: onDelete('cascade) e onUpdate('cascade').
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+<img src="https://github.com/bertolucci-alan/pc4_challenge/blob/master/readme/school_delete.gif" width="600"/>
+<br/><br/><br/><br/>
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Turmas 
+<hr>
+Assim como a listagem das escolas, a listagem das turmas ocorre de forma semelhante, vemos uma tabela com as informações: Ano da turma, Nível de ensino (médio/high ou fundamental/elementary), Série, Turno (manhã/moornign, tarde/afternoon ou noite/night), Nome da escola a quem pertence e quantidade de alunos da turma. <br/><br/>
 
-## Security Vulnerabilities
+<img src="https://github.com/bertolucci-alan/pc4_challenge/blob/master/readme/class.jpg" width="600"/>
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Quando o usuário é direcionado à tela para registrar uma nova turma, uma query chamada pela função mounted do Vue.js (executa quando a tela é carregada) realiza uma pesquisa para retornar todas as escolas disponíveis para registrar uma turma. Campos: Ano, nível de ensino, série, turno e escola. 
 
-## License
+<img src="https://github.com/bertolucci-alan/pc4_challenge/blob/master/readme/class_register.gif" width="600"/>
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+No método de edição de turmas, ao carregar a página, além da query para pegar as escolas, uma outra é executada, monstrando se há alunos já registrados em tal turma.
+
+<img src="https://github.com/bertolucci-alan/pc4_challenge/blob/master/readme/class_update.gif" width="600"/>
+
+A pesquisa de turmas é feita pelo ano dessa, caso o campo esteja vazio, será retornada todas as turmas registradas no sistema.
+
+<img src="https://github.com/bertolucci-alan/pc4_challenge/blob/master/readme/class_search.gif" width="600"/>
+
+Método de deleção de turma. 
+
+<img src="https://github.com/bertolucci-alan/pc4_challenge/blob/master/readme/class_delete.gif" width="600"/>
+<br/><br/><br/><br/>
+
+### Alunos
+<hr>
+
+Na tela de alunos, os dados também são retornados de forma coesa e organizada, mostrando, dentro de uma tabela, os campos: Nome completo do aluno, E-mail, Data de nascimento, telefone, escola na qual o aluno está registrado e quantas turmas o aluno participa. Lembrando que o relacionamento de escola e alunos é de um para muitos, e de alunos para turmas, muitos para muitos.
+
+<img src="https://github.com/bertolucci-alan/pc4_challenge/blob/master/readme/student.jpg" width="600"/>
+
+Começando pelo método de registro, vemos a possibilidade de guardar no banco de dados as informações: Nome completo, E-mail, telefone, data de nascimento, gênero, escola e turmas.
+
+<img src="https://github.com/bertolucci-alan/pc4_challenge/blob/master/readme/student_register_1.gif" width="600"/>
+
+Dando mais destaque à essa dinâmica aqui, vemos que, quando há o carregamento da página, é trazido para o campo "Escola" todas as escolas registradas no sistema.
+
+Quando o valor desse campo é alterado, o sistema faz uma query e retorna todas as turmas registradas na determinada escola escolhida pelo usuário no campo "Turmas".
+
+Após escolher a turma e clicar no botão "Adicionar turma", o valor da turma é jogado dentro de um array que será usada para fazer o registro na table pivo: students_classes.
+
+O usuário pode remover a turma selecionada, assim, o valor da turma será removido do array.
+
+<img src="https://github.com/bertolucci-alan/pc4_challenge/blob/master/readme/student_register_2.gif" width="600"/>
+
+A mesma dinâmica com as escolas e turmas é usada no método de edição do usuário.
+
+<img src="https://github.com/bertolucci-alan/pc4_challenge/blob/master/readme/student_update.gif" width="600"/>
+
+Para pesquisar aluno(s), basta digitar o nome no campo e pressionar "Pesquisar", será devolvido todos os alunos que correspondem à pesquisa.
+
+<img src="https://github.com/bertolucci-alan/pc4_challenge/blob/master/readme/student_search.gif" width="600"/>
+
+E por fim, o método de deletar aluno.
+
+<img src="https://github.com/bertolucci-alan/pc4_challenge/blob/master/readme/student_delete.gif" width="600"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
